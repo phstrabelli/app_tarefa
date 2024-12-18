@@ -10,11 +10,32 @@
     border: solid 1px #DFDFDF;
     padding: 25px !important;
 }
-
 li.list-group-item.active {
     background-color: #fff;
-    border-color: #009933;
-    border-left: solid 10px #009933;
+    &::after {
+        width: 10px;
+        height: 100%;
+    }
+}
+
+li.list-group-item {
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 0%;
+        left: -1px;
+        top: 0px;
+        background-color: #009933;
+        transition: 0.5s ease-in-out;
+    }
+    &:hover {
+        &::after {
+            width: 10px;
+            height: 100%;
+        }
+    }
 }
 
 li a {
@@ -26,28 +47,6 @@ li a {
 
 li a {
     position: relative;
-
-    &::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 4px;
-        border-radius: 3px;
-        left: 0;
-        bottom: -5px;
-        background-color: #009933;
-    }
-
-    &:hover {
-        text-decoration: none;
-        color: #009933;
-        transition: 0.3s ease-in-out;
-
-        &::after {
-            width: 70%;
-            transition: 0.5s ease-in-out;
-        }
-    }
 }
 
 h4 {
