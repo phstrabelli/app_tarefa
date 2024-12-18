@@ -1,0 +1,131 @@
+.menu {
+    margin-bottom: 25px;
+}
+
+.app {
+    margin-top: 25px;
+}
+
+.pagina {
+    border: solid 1px #DFDFDF;
+    padding: 25px !important;
+}
+
+li.list-group-item.active {
+    background-color: #fff;
+    border-color: #009933;
+    border-left: solid 10px #009933;
+}
+
+li a {
+    color: #212529;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+li a {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 4px;
+        border-radius: 3px;
+        left: 0;
+        bottom: -5px;
+        background-color: #009933;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: #009933;
+        transition: 0.3s ease-in-out;
+
+        &::after {
+            width: 70%;
+            transition: 0.5s ease-in-out;
+        }
+    }
+}
+
+h4 {
+    color: #009933 !important;
+}
+
+.close {
+    background-color: red;
+    height: 20px;
+    width: 20px;
+}
+
+.popup {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+
+    
+    #noBtn,#yesBtn {
+        align-items: center;
+        background-color: #218838;
+        border: 0;
+        border-radius: 100px;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 20px;
+        max-width: 480px;
+        min-height: 40px;
+        min-width: 0px;
+        overflow: hidden;
+        padding: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+        touch-action: manipulation;
+        transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+        user-select: none;
+        -webkit-user-select: none;
+        vertical-align: middle;
+        &:hover {
+            background-color: #125822;
+            color: #ffffff;
+        }
+    }
+
+
+}
+
+i {
+    cursor: pointer;
+
+    &:hover {
+        scale: 0.9;
+    }
+
+}
+
+.form {
+    margin-bottom: 0 !important;
+}
