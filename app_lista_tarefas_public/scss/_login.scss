@@ -1,38 +1,6 @@
 body {
     margin: 0;
 }
-#login-section {
-    svg {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        z-index: 0;
-    }
-
-
-    img {
-        position: absolute;
-        left: 43%;
-        transform: rotate(-10deg);
-    }
-}
-#cadastro-section {
-    justify-content: flex-end;
-
-    svg {
-        position: absolute;
-        left: 15%;
-        top: 0;
-    }
-
-    img {
-            height: 492px;
-            width: 536px;
-            position: absolute;
-            left: 20%;
-            bottom: 51px;
-        }
-}
 
 #login-section,
 #cadastro-section {
@@ -42,15 +10,6 @@ body {
     align-items: center;
     position: relative;
     background-color: #EBEFFF;
-
-    .login-container {
-        
-        margin-left: 125px;
-    }
-
-    .cadastro-container {
-        margin-right: 150px;
-    }
 
     .login-container,
     .cadastro-container {
@@ -72,8 +31,6 @@ body {
         .input-group {
             display: flex;
             flex-flow: column;
-            gap: 15px;
-            margin-bottom: 12px;
 
             label {
                 font-weight: 400;
@@ -117,6 +74,7 @@ body {
 
             &#cadastro-btn {
                 margin-bottom: 27px;
+                
             }
         }
 
@@ -136,7 +94,7 @@ body {
             }
         }
 
-        #error-message {
+        .error-message {
             color: red;
             font-size: 14px;
         }
@@ -150,4 +108,147 @@ body {
         right: 0;
     }
 
+}
+
+#login-section {
+    svg {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 0;
+    }
+
+
+    img {
+        position: absolute;
+        left: 43%;
+        transform: rotate(-10deg);
+    }
+
+    .login-container {
+        margin-left: 125px;
+        .input-group {
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+    }
+
+    @include lg {
+        img {
+            width: 500px;
+            height: 381px;
+            left: 45%;
+        }
+    }
+
+    @include md {
+        img {
+            display: none;
+        }
+    }
+
+    @include sm {
+        justify-content: center;
+
+        .login-container {
+            margin-left: 0px;
+        }
+
+        #purple-bg {
+            display: none;
+        }
+    }
+
+    @include lower-sm {
+        padding:10px;
+    }
+}
+
+#cadastro-section {
+    justify-content: flex-end;
+    padding: 30px 0 35px 0;
+
+    svg {
+        position: absolute;
+        left: 15%;
+        top: 0;
+    }
+
+    img {
+        height: 492px;
+        width: 536px;
+        position: absolute;
+        left: 20%;
+        bottom: 51px;
+    }
+    
+    .cadastro-container {
+        margin-right: 150px;
+
+        #form_cadastro_2 {
+            display: none;
+
+            #form-step-2 {
+                display: none;
+            }
+            .btn-group {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                button {
+                    width: 45%;
+                }
+
+                #prev-btn {
+                    background-color: #AFB3FF;
+                    color: #656ED3;
+                    &:hover {
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .input-group {
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        
+    }
+
+    @include lg {
+        svg {
+            left: -3%;
+        }
+        img {
+            width: 400px;
+            height: 367px;
+            left: 9%;
+            bottom: 20%;
+        }
+    }
+}
+
+#bg-success {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: blur(10px);
+    z-index: 5; 
+}
+#msg-success {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .close {
+        background-color: red;
+        height: 20px;
+        width: 20px;
+    }
 }

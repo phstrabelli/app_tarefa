@@ -20,8 +20,12 @@ if ($acao == 'inserir') {
     $userService = new UserService($conexao, $user);
 
     $message = $userService->inserir();
-
-    header('Location: cadastro.php?inclusao=1');
+    if($_SESSION['cadastro'] === 1) {
+        header('Location: cadastro.php?inclusao=1');
+    }
+    if($_SESSION['cadastro'] === 0) {
+        header('Location: cadastro.php?inclusao=0');
+    }
 } else if ($acao == 'buscar') {
     session_start();
     $user = new User();

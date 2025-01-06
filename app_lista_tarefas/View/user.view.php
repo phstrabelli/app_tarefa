@@ -12,7 +12,7 @@ class UserService
     }
 
     public function inserir()
-    {   
+    {
         session_start();
 
         try {
@@ -27,18 +27,19 @@ class UserService
 
             $stmt->execute();
 
-            $_SESSION['return_message'] = 'Usuário cadastrado com sucesso.';
+            $_SESSION['cadastro'] = 1;
         } catch (PDOException $e) {
+            $_SESSION['cadastro'] = 0;
             if ($e->getCode() == 23000 && strpos($e->getMessage(), '1062 Duplicate entry') !== false) {
-                $_SESSION['return_message'] = "The username you have chosen is already taken. Please choose another one.";
+                $_SESSION['return_message'] = "Este nome de usuário já está sendo utilizado. Por favor, insira um novo.";
             } else {
-                $_SESSION['return_message'] = "An error occurred. Please try again later.";
+                $_SESSION['return_message'] = "Ocorreu um erro. Tente novamente mais tarde.";
             }
         }
     }
 
     public function buscar($username)
-    {   
+    {
         session_start();
 
         $query = '
