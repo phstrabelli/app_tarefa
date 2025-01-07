@@ -1,10 +1,10 @@
 <?php
-	session_start();
-	if (!isset($_SESSION['id']))
-		header('Location: index.php');
+session_start();
+if (!isset($_SESSION['id']))
+	header('Location: index.php');
 
-	$acao = 'recuperar';
-	require 'tarefa_controller.php';
+$acao = 'recuperar';
+require 'tarefa_controller.php';
 ?>
 
 <html>
@@ -34,45 +34,32 @@
 		</div>
 	<?php endif ?>
 	<div class="container app">
-		<div class="row">
-			<div class="col-sm-3 menu">
-				<ul class="list-group">
-					<li class="list-group-item"><a href="tarefas_pendentes.php">Tarefas pendentes</a></li>
-					<li class="list-group-item"><a href="nova_tarefa.php">Nova tarefa</a></li>
-					<li class="list-group-item active"><a href="#">Todas tarefas</a></li>
-				</ul>
+
+		<div class="pagina">
+			<div class="col-12">
+				<h4>Todas tarefas</h4>
+
+				<?php foreach ($tarefas as $tarefa) : ?>
+					<?php if ($tarefa->status != 0) : ?>
+						<div class="row mb-3 d-flex align-items-center tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
+							<div class="col-sm-9" id='tarefa_<?= $tarefa->id ?>'>
+								<?= $tarefa->tarefa ?> <span id='status_<?= $tarefa->id ?>'>(<?= $tarefa->status ?>)</span>
+							</div>
+							<div class="col-sm-3 d-flex justify-content-between">
+								<i class="fas fa-trash-alt fa-lg text-danger" onclick="remove(<?= $tarefa->id ?>, 'remover')"></i>
+								<i class="fas fa-edit fa-lg text-info " onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>',event)"></i>
+								<i class="fas fa-check-square fa-lg text-success" onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatus')"></i>
+							</div>
+						</div>
+					<?php endif ?>
+				<?php endforeach ?>
 			</div>
 
-			<div class="col-sm-9">
-				<div class="container pagina">
-					<div class="row">
-						<div class="col">
-							<h4>Todas tarefas</h4>
-							<hr />
-
-							<?php foreach ($tarefas as $tarefa) : ?>
-								<?php if ($tarefa->status != 0) : ?>
-									<div class="row mb-3 d-flex align-items-center tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
-										<div class="col-sm-9" id='tarefa_<?= $tarefa->id ?>'>
-											<?= $tarefa->tarefa ?> <span id='status_<?= $tarefa->id ?>'>(<?= $tarefa->status ?>)</span>
-										</div>
-										<div class="col-sm-3 d-flex justify-content-between">
-											<i class="fas fa-trash-alt fa-lg text-danger" onclick="remove(<?= $tarefa->id ?>, 'remover')"></i>
-											<i class="fas fa-edit fa-lg text-info " onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>',event)"></i>
-											<i class="fas fa-check-square fa-lg text-success" onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatus')"></i>
-										</div>
-									</div>
-								<?php endif ?>
-							<?php endforeach ?>
-						</div>
-					</div>
-					<div id="confirmationPopup" class="popup">
-						<div class="popup-content">
-							<p>Are you sure you want to proceed?</p>
-							<button id="yesBtn">Yes</button>
-							<button id="noBtn">No</button>
-						</div>
-					</div>
+			<div id="confirmationPopup" class="popup">
+				<div class="popup-content">
+					<p>Are you sure you want to proceed?</p>
+					<button id="yesBtn">Yes</button>
+					<button id="noBtn">No</button>
 				</div>
 			</div>
 		</div>

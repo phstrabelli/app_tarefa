@@ -1,5 +1,113 @@
-.menu {
-    margin-bottom: 25px;
+body {
+    background-color: $bg-color !important;
+    overflow-y: hidden;
+}
+
+#tarefa-header {
+    .container {
+        display: flex;
+        justify-content: space-between;
+
+        .menu {
+            ul {
+                height: 50px;
+                display: flex;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                gap: 30px;
+
+                li {
+                    font-size: 20px;
+
+                    a {
+                        color: $dark-purple;
+                        display: flex;
+                        text-decoration: none;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            width: 0%;
+                            height: 3px;
+                            left: 0;
+                            bottom: 0;
+                            background-color: $dark-purple;
+                            transition: .3s ease-in-out;
+                        }
+
+                        &:hover {
+                            &::after {
+                                width: 100%;
+                            }
+                        }
+
+                        &.active {
+                            &::after {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #logout {  
+            button {
+                background-color: transparent;
+                border: none;
+                height: 100%;
+                width: 50px;
+                background-image: url('./img/logout.png');
+                background-repeat: no-repeat;
+                background-position: center center;
+
+                &:hover {
+                    scale: 0.90;
+                }
+            }
+        }
+    }
+
+    @include sm {
+        .container {
+            display: flex;
+            justify-content: flex-end;
+            #burguer-menu {
+                height: 50px;
+                width: 40px;
+                position: relative;
+                span {
+                    position: absolute;
+                    display: block;
+                    background-color: $dark-purple;
+                    width: 100%;
+                    height: 3px;
+                    border-radius: 2px;
+                    top: 50% ;
+    
+                    &:first-child {
+                        top: 25%;
+                    }
+                    &:last-child {
+                        top: 75%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.svg-bg {
+    position: absolute;
+    top: -190px;
+    right: -70px;
+    z-index: 0;
+    transform: rotate(-15deg);
 }
 
 .app {
@@ -7,50 +115,16 @@
 }
 
 .pagina {
-    border: solid 1px #DFDFDF;
+    border: solid 1px $light-purple;
     padding: 25px !important;
 }
-li.list-group-item.active {
-    background-color: #fff;
-    &::after {
-        width: 10px;
-        height: 100%;
-    }
-}
 
-li.list-group-item {
-    position: relative;
-    &::after {
-        content: '';
-        position: absolute;
-        width: 10px;
-        height: 0%;
-        left: -1px;
-        top: 0px;
-        background-color: #009933;
-        transition: 0.5s ease-in-out;
-    }
-    &:hover {
-        &::after {
-            width: 10px;
-            height: 100%;
-        }
-    }
-}
-
-li a {
-    color: #212529;
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-li a {
-    position: relative;
-}
 
 h4 {
-    color: #009933 !important;
+    color: $dark-purple !important;
+    border-bottom: 1px solid $light-purple;
+    margin-bottom: 0;
+    padding-bottom: 20px;
 }
 
 .close {
@@ -80,8 +154,9 @@ h4 {
     border-radius: 5px;
     text-align: center;
 
-    
-    #noBtn,#yesBtn {
+
+    #noBtn,
+    #yesBtn {
         align-items: center;
         background-color: #218838;
         border: 0;
@@ -107,6 +182,7 @@ h4 {
         user-select: none;
         -webkit-user-select: none;
         vertical-align: middle;
+
         &:hover {
             background-color: #125822;
             color: #ffffff;

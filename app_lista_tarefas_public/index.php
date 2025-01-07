@@ -21,9 +21,6 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
-    <?php if (isset($_GET['busca']) && $_GET['busca'] == 0) {
-        echo 'DEU NAO MAN';
-    } ?>
     <main>
         <section id="login-section">
             <div class="login-container">
@@ -38,8 +35,12 @@ if (isset($_SESSION['id'])) {
                         <input type="password" id="password" name="password" required>
                     </div>
 
-                    <button type="submit" class="login-btn">Login</button>
+                    <button type="submit" class="login-btn" id="login-btn">Login</button>
+                    <?php if (isset($_GET['busca']) && $_GET['busca'] == 0) : ?>
+                        <div class="error-message"> Desculpe, mas não conseguimos encontrar um usuário com as informações fornecidas. Por favor, verifique os dados.</div>
+                    <?php endif ?>
                 </form>
+
                 <p class="signup-link">Não tem uma conta? <a href="cadastro.php">Cadastre-se aqui</a></p>
             </div>
 
@@ -55,7 +56,7 @@ if (isset($_SESSION['id'])) {
         </section>
     </main>
     <footer></footer>
-
+   
 </body>
 
 </html>

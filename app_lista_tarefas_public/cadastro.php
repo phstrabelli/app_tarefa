@@ -20,11 +20,12 @@
 
     <main>
         <?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1): ?>
-            <div id='bg-success'>
-            </div>
+            <div id='bg-success'></div>
             <div id="msg-success">
-                <h5>Usuário cadastrado com sucesso.</h5>
-                <div class="close"></div>
+                <div id="msg-content">
+                    <h5>Usuário cadastrado com sucesso.</h5>
+                    <div id="login-link">Realizar o Login</div>
+                </div>
             </div>
         <?php endif ?>
         <section id="cadastro-section">
@@ -176,9 +177,8 @@
             $('#form-step-2').hide()
         })
 
-        $(".close").on("click", () => {
-            $("#bg-success").hide();
-            $("#msg-success").hide();
+        $("#login-link").on("click", () => {
+            window.location.href = "index.php";
         });
 
         function screenHeight() {
