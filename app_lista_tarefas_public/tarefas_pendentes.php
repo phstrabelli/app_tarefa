@@ -7,65 +7,74 @@ if (!isset($_SESSION['id']))
 $acao = 'recuperar';
 require 'tarefa_controller.php';
 ?>
-<html>
 
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>App Lista Tarefas</title>
+<?php include_once './components/header.php' ?>
 
-	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="./js/service.js"></script>
-	<script src="./js/others.js"></script>
-</head>
+<?php if (isset($_GET['alteracao']) && $_GET['alteracao'] == 1): ?>
+	<div id='bg-success' class="bg-success pt-2 text-white d-flex justify-content-center">
+		<h5>Alteração Realizada Com Sucesso</h5>
+		<div class="close"></div>
+	</div>
+<?php endif ?>
 
-<body>
-	<?php include_once './components/header.php' ?>
-	<?php if (isset($_GET['alteracao']) && $_GET['alteracao'] == 1): ?>
-		<div id='bg-success' class="bg-success pt-2 text-white d-flex justify-content-center">
-			<h5>Alteração Realizada Com Sucesso</h5>
-			<div class="close"></div>
-		</div>
-	<?php endif ?>
+<main>
+	<?php include_once './components/svg_bg.php' ?>
 
-	<main>
-		<svg class="svg-bg" width="442" height="647" viewBox="0 0 442 647" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<rect x="316.295" y="632.165" width="638.74" height="141" rx="70.5" transform="rotate(-117.334 316.295 632.165)" fill="#838CF1" />
-			<rect x="299.174" y="646.381" width="638.737" height="140.996" rx="70.4981" transform="rotate(-117.929 299.174 646.381)" fill="#AFB3FF" />
-		</svg>
-
-
-		<div class="container app">
-			<div class="pagina">
-				<div class="col-12">
-					<h4>Tarefas pendentes</h4>
+	<div class="container app">
+		<div class="pagina col-8">
+			<div class="col-12">
+				<h4>Tarefas pendentes</h4>
+				<div class="tarefas">
+					<?php 
+						usort($tarefas, function($a, $b) {
+							return strtotime($a->data . ' ' . $a->horario) - strtotime($b->data . ' ' . $b->horario);
+						});
+					?>
 					<?php foreach ($tarefas as $tarefa) : ?>
-						<?php if ($tarefa->status == 'pendente') : ?>
-							<div class="row mb-3 d-flex align-items-center tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
-								<div class="col-sm-9" id='tarefa_<?= $tarefa->id ?>'><?= $tarefa->tarefa ?></div>
-								<div class="col-sm-3 d-flex justify-content-between">
-									<i class="fas fa-trash-alt fa-lg text-danger" onclick="remove(<?= $tarefa->id ?>, 'remover')"></i>
-									<i class="fas fa-edit fa-lg text-info" onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>',event)"></i>
-									<i class="fas fa-check-square fa-lg text-success" onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatusPendente')"></i>
+						<?php
+							date_default_timezone_set('America/Sao_Paulo');
+
+							$currentDateTime = new DateTime();
+
+							$tarefaHorario = $tarefa->data . ' ' . $tarefa->horario;
+
+							$dataTarefa = new DateTime($tarefaHorario);
+
+							$status = $currentDateTime < $dataTarefa ? $tarefa->status : 'atrasado';
+						?>
+						<?php if ($tarefa->status == 'pendente' && $status != 'atrasado') : ?>
+							<div class="tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
+								<div id='tarefa_<?= $tarefa->id ?>' class="tarefa-title" contenteditable><?= $tarefa->tarefa ?></div>
+								<div class="tarefa-data">
+									<p id='tarefaData_<?= $tarefa->id ?>'><?= date('H:i', strtotime($tarefa->horario)) ?></p>
+									<p id='tarefaHorario_<?= $tarefa->id ?>'>
+										<?php
+										$data = new DateTime($tarefa->data);
+										echo $data->format('d/m/Y');
+										?>
+									</p>
+								</div>
+								<div class="tarefa-obs">
+									<p id='tarefaObs_<?= $tarefa->id ?>' class="content-tarefa-obs" contenteditable><?= $tarefa->obs?></p>
+								</div>
+
+								<div class="tarefa-options">
+									<div class="pontinhos"><img  src="./img/mostrar-mais-botao-com-tres-pontos.png" alt=""></div>
+									<div class="icons">
+										<i class="fas fa-trash-alt  " onclick="remove(<?= $tarefa->id ?>, 'remover')">Excluir</i>
+										<i class="fas fa-check-square  " onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatusPendente')">Concluido</i>
+									</div>
 								</div>
 							</div>
 						<?php endif ?>
 					<?php endforeach ?>
 				</div>
-				<div id="confirmationPopup" class="popup">
-					<div class="popup-content">
-						<p>Are you sure you want to proceed?</p>
-						<button id="yesBtn">Yes</button>
-						<button id="noBtn">No</button>
-					</div>
-				</div>
 			</div>
+
 		</div>
-	</main>
+	</div>
+	<?php include_once './components/confirmation_popup.php' ?>
+</main>
 </body>
 
 

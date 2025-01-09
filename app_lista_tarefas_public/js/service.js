@@ -1,40 +1,41 @@
-function editar(id, texto, event) {
-    let tarefa = '#tarefa_' + id
-    $(event.target).css('pointer-events', 'none')
-    let form = document.createElement('form');
-    form.action = 'tarefa_controller.php?acao=atualizar';
-    form.method = 'POST';
-    $(form).addClass('row form')
+// function editar(id, texto, event) {
+//     let tarefa = '#tarefa_' + id
+//     $(event.target).css('pointer-events', 'none')
+//     let form = document.createElement('form');
+//     form.action = 'tarefa_controller.php?acao=atualizar';
+//     form.method = 'POST';
+//     $(form).addClass('row form')
 
-    let inputTarefa = document.createElement('input');
-    inputTarefa.type = 'text';
-    inputTarefa.id = 'tarefa';
-    inputTarefa.name = 'form-control';
-    inputTarefa.value = texto
-    $(inputTarefa).addClass('col-9 form-control')
+//     let inputTarefa = document.createElement('input');
+//     inputTarefa.type = 'text';
+//     inputTarefa.id = 'tarefa';
+//     inputTarefa.name = 'form-control';
+//     inputTarefa.value = texto
+//     $(inputTarefa).addClass('col-9 form-control')
 
-    let inputId = document.createElement('input');
-    inputId.type = 'hidden';
-    inputId.name = 'id';
-    inputId.value = id
-    $(inputId).hide()
-
-
-    let submitButton = document.createElement('input');
-    submitButton.type = 'submit';
-    $(submitButton).addClass('col-3 btn btn-info editBtn');
-    $(submitButton).text('Atualizar')
-
-    $(form).append(inputTarefa)
-    $(form).append(inputId)
-    $(form).append(submitButton)
-
-    $(tarefa).html(form)
+//     let inputId = document.createElement('input');
+//     inputId.type = 'hidden';
+//     inputId.name = 'id';
+//     inputId.value = id
+//     $(inputId).hide()
 
 
-    // $(tarefa).before(form)
+//     let submitButton = document.createElement('input');
+//     submitButton.type = 'submit';
+//     $(submitButton).addClass('col-3 btn btn-info editBtn');
+//     $(submitButton).text('Atualizar')
 
-}
+//     $(form).append(inputTarefa)
+//     $(form).append(inputId)
+//     $(form).append(submitButton)
+
+//     $(tarefa).html(form)
+
+
+//     // $(tarefa).before(form)
+
+// }
+
 
 function remove(id, action) {
     $('#confirmationPopup').fadeIn();
@@ -65,7 +66,7 @@ function checkAndRemove(id, action) {
                 let statusDiv = '#status_' + id
                 let statusText = dados == 1 ? '(pendente)' : '(realizado)'
 
-                $text = $(statusDiv).text() == '(pendente)' ? '(realizado)' : '(pendente)'
+                $text = $(statusDiv).text() == '(pendente)'   || $(statusDiv).text() == '(atrasado)' ? '(realizado)' : '(pendente)'
 
                 $(statusDiv).text($text)
             }
@@ -80,3 +81,47 @@ function checkAndRemove(id, action) {
     })
 
 }
+
+$(document).ready(function () {
+    $('.tarefa-title').on('blur', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'titulo'
+        let tarefa = $(e.currentTarget).text()
+
+        editar(id,acao,tarefa)
+    }); 
+
+    $('.content-tarefa-obs').on('blur', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'obs'
+        let tarefa = $(e.currentTarget).text()
+
+        editar(id,acao,tarefa)
+    }); 
+
+
+
+    function editar(id, acao, tarefa) {
+        $.ajax({
+            type: 'GET',
+            url: 'tarefa_controller.php',
+            data: {
+                id: id,
+                acao: `editar_${acao}` ,
+                tarefa: tarefa,
+            },
+    
+    
+            success: dados => {
+                console.log(dados)
+            },
+            error: erro => {
+                console.log(erro)
+            }
+        })
+    }
+})

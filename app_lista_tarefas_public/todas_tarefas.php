@@ -7,63 +7,64 @@ $acao = 'recuperar';
 require 'tarefa_controller.php';
 ?>
 
-<html>
+<?php include_once './components/header.php' ?>
 
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>App Lista Tarefas</title>
+<?php if (isset($_GET['alteracao']) && $_GET['alteracao'] == 1): ?>
+	<div id='bg-success' class="bg-success pt-2 text-white d-flex justify-content-center">
+		<h5>Alteração Realizada Com Sucesso</h5>
+		<div class="close"></div>
+	</div>
+<?php endif ?>
+<main>
+	<?php include_once './components/svg_bg.php' ?>
 
-	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="./js/service.js"></script>
-	<script src="./js/others.js"></script>
 
-</head>
-
-<body>
-	<?php include_once './components/header.php' ?>
-
-	<?php if (isset($_GET['alteracao']) && $_GET['alteracao'] == 1): ?>
-		<div id='bg-success' class="bg-success pt-2 text-white d-flex justify-content-center">
-			<h5>Alteração Realizada Com Sucesso</h5>
-			<div class="close"></div>
-		</div>
-	<?php endif ?>
 	<div class="container app">
-
 		<div class="pagina">
 			<div class="col-12">
 				<h4>Todas tarefas</h4>
-
-				<?php foreach ($tarefas as $tarefa) : ?>
-					<?php if ($tarefa->status != 0) : ?>
-						<div class="row mb-3 d-flex align-items-center tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
-							<div class="col-sm-9" id='tarefa_<?= $tarefa->id ?>'>
-								<?= $tarefa->tarefa ?> <span id='status_<?= $tarefa->id ?>'>(<?= $tarefa->status ?>)</span>
+				<div class="tarefas">
+					<?php foreach ($tarefas as $tarefa) : ?>
+						<?php if ($tarefa->status != 0) : ?>
+							<div class="tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
+								<div id='tarefa_<?= $tarefa->id ?>' class="tarefa-title">
+									<?php
+										date_default_timezone_set('America/Sao_Paulo');
+										$currentDateTime = new DateTime();
+										$tarefaHorario = $tarefa->data . ' ' . $tarefa->horario;
+										$dataTarefa = new DateTime($tarefaHorario);
+										if ($currentDateTime > $dataTarefa && $tarefa->status == 'pendente') {
+											$status = 'atrasado';
+										} else {
+											$status = $tarefa->status;
+										}
+									?>
+									<?= $tarefa->tarefa ?> <span id='status_<?= $tarefa->id ?>' class="status">(<?= $status ?>)</span>
+								</div>
+								<div class="tarefa-data">
+									<p><?= date('H:i', strtotime($tarefa->horario)) ?></p>
+									<p>
+										<?php
+										$data = new DateTime($tarefa->data);
+										echo $data->format('d/m/Y');
+										?>
+									</p>
+								</div>
+								<div>
+									<i class="fas fa-trash-alt fa-lg text-danger" onclick="remove(<?= $tarefa->id ?>, 'remover')"></i>
+									<i class="fas fa-edit fa-lg text-info " onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>',event)"></i>
+									<i class="fas fa-check-square fa-lg text-success" onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatus')"></i>
+								</div>
 							</div>
-							<div class="col-sm-3 d-flex justify-content-between">
-								<i class="fas fa-trash-alt fa-lg text-danger" onclick="remove(<?= $tarefa->id ?>, 'remover')"></i>
-								<i class="fas fa-edit fa-lg text-info " onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>',event)"></i>
-								<i class="fas fa-check-square fa-lg text-success" onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatus')"></i>
-							</div>
-						</div>
-					<?php endif ?>
-				<?php endforeach ?>
-			</div>
-
-			<div id="confirmationPopup" class="popup">
-				<div class="popup-content">
-					<p>Are you sure you want to proceed?</p>
-					<button id="yesBtn">Yes</button>
-					<button id="noBtn">No</button>
+						<?php endif ?>
+					<?php endforeach ?>
 				</div>
 			</div>
 		</div>
 	</div>
+	<?php include_once './components/confirmation_popup.php' ?>
+</main>
+
 </body>
 
 </html>

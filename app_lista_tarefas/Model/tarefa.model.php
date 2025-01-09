@@ -5,6 +5,9 @@ class Tarefa {
     private $tarefa;
     private $data_cadastro;
     private $id_user;
+    private $horario;
+    private $data;
+    private $obs;
 
     public function __get($attr) {
         return $this->$attr;

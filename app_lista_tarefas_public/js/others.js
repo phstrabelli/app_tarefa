@@ -28,5 +28,39 @@ $(document).ready(function () {
         
     })
 
+    $('.tarefa').on('click', (e)=> {
+        $('.tarefa').removeClass('active');
+        $(e.currentTarget).addClass('active')
+        
+    })
+
+    $('.pontinhos').on('click', (e)=> {
+        let icons = $(e.currentTarget).next();
+        e.stopPropagation();
+        
+        if (icons.is(':visible')) {
+            icons.animate({ opacity: 0 , height: '0px' }, 500, function() {
+                icons.hide(); 
+            });
+        } else {
+                icons.css('display','flex')
+                icons.css('justify-content','space-between')
+                icons.css('flex-flow','column')
+                icons.show().animate({ opacity: 1 , height: '90px' }, 500);
+        }
+    })
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.tarefa').length) {
+            $('.tarefa').removeClass('active');
+        }
+        if (!$(e.target).closest('.icons').length) {
+            $('.icons').animate({ opacity: 0 , height: '0px' }, 500, function() {
+                $('.icons').hide(); 
+            });
+        }
+    });
     
+        
 });
+
