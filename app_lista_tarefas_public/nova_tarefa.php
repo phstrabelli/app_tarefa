@@ -19,20 +19,19 @@ if (!isset($_SESSION['id']))
 		<div class="pagina">
 			<div class="col-12">
 				<h4>Nova tarefa</h4>
-				<form method="post" action="tarefa_controller.php?acao=inserir">
+				<form method="post" action="tarefa_controller.php?acao=inserir" >
 					<div class="form-group">
 						<label for="inputNewTask">Descrição da tarefa:</label>
 						<input type="text" id='inputNewTask' class="form-control" name='tarefa' placeholder="Exemplo: Lavar o carro">
 
-						<label for="data">Selecione a data:</label>
-						<input type="date" id="data" name="data">
-
-						<label for="horario">Selecione o horário:</label>
-						<input type="time" id="horario" name="horario">
-
 						<label for="obs">Observação:</label>
 						<textarea id="obs" name="obs"></textarea>
 
+						<label for="data">Selecione a data:</label>
+						<input name='data' id="data">
+
+						<label for="horario">Selecione o horário:</label>
+						<input type="time" id="horario" name="horario">
 					</div>
 					<button class="btn btn-success" id="btnNewTask">Cadastrar</button>
 				</form>
@@ -41,29 +40,24 @@ if (!isset($_SESSION['id']))
 	</div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <script>
-	$('#btnNewTask').on('click', (e) => {
-		let horario = `${$('#data').val()} ${$('#horario').val()}:00`
 
-		let now = new Date();
-
-		const year = now.getFullYear();
-		const month = String(now.getMonth() + 1).padStart(2, '0');
-		const day = String(now.getDate()).padStart(2, '0');
-
-		const hours = String(now.getHours()).padStart(2, '0');
-		const minutes = String(now.getMinutes()).padStart(2, '0');
-		const seconds = String(now.getSeconds()).padStart(2, '0');
-
-		now = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-		const dateObj1 = new Date(now);
-		const dateObj2 = new Date(horario);
-
-		if (dateObj1 > dateObj2) {
-			e.preventDefault()
-		}
+	const datePicker = flatpickr('#data', {
+		minDate: "today",
+		clickOpens: true,
+		altFormat: "F j, Y",
+		dateFormat: "Y-m-d",
+		altInput: true,
 	})
+	const timePicker = flatpickr('#horario', {
+		enableTime: true,
+		noCalendar: true,
+		dateFormat: "H:i",
+		time_24hr: true
+	})
+	
 </script>
 </body>
 

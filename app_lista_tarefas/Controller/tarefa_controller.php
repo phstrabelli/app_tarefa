@@ -22,7 +22,7 @@ if ($acao == 'inserir') {
     $tarefaService->inserir();
 
 
-    header('Location: nova_tarefa.php?inclusao=1');
+    header('Location: tarefas_pendentes.php');
 
 } else if ($acao == 'recuperar') {
     $tarefa = new Tarefa();
@@ -63,7 +63,6 @@ if ($acao == 'inserir') {
     $id = $_GET['id'];
     $tarefas = $tarefaService->atualizar_titulo($tarefa, $id);
 
-    // header('Location: todas_tarefas.php?alteracao=1');
 } else if($acao == 'editar_obs') {
     $tarefa = new Tarefa();
 
@@ -75,5 +74,26 @@ if ($acao == 'inserir') {
     $id = $_GET['id'];
     $tarefas = $tarefaService->atualizar_obs($tarefa, $id);
 
-    // header('Location: todas_tarefas.php?alteracao=1');
+} else if($acao == 'editar_data') {
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $tarefa = $_GET['tarefa'];
+    $id = $_GET['id'];
+    $tarefas = $tarefaService->atualizar_data($tarefa, $id);
+
+} else if($acao == 'editar_horario') {
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $tarefa = $_GET['tarefa'];
+    $id = $_GET['id'];
+    $tarefas = $tarefaService->atualizar_horario($tarefa, $id);
+
 }

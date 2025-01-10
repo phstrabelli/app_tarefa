@@ -90,6 +90,10 @@ $(document).ready(function () {
         let acao = 'titulo'
         let tarefa = $(e.currentTarget).text()
 
+        if ($(e.currentTarget).text().trim() === '') {
+            $(e.currentTarget).addClass('empty');
+        }
+
         editar(id,acao,tarefa)
     }); 
 
@@ -100,6 +104,26 @@ $(document).ready(function () {
         let acao = 'obs'
         let tarefa = $(e.currentTarget).text()
 
+        editar(id,acao,tarefa)
+    }); 
+
+    $('.calendario').on('change', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'data'
+        let tarefa = $(e.currentTarget).val()
+        
+        editar(id,acao,tarefa)
+    }); 
+
+    $('.horario').on('change', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'horario'
+        let tarefa = $(e.currentTarget).val()
+                
         editar(id,acao,tarefa)
     }); 
 
@@ -123,5 +147,26 @@ $(document).ready(function () {
                 console.log(erro)
             }
         })
+    }
+    placeHolder()
+
+    function placeHolder() {
+        $('.tarefa-title').each(function () {
+            let $this = $(this);
+            
+            if ($this.text().trim() === '') {
+            $this.addClass('empty');
+            }
+
+        $this.on('blur', function() {
+            console.log('ada')
+            if ($this.text().trim() === '') {
+                $this.addClass('empty');
+            } else {
+                $this.removeClass('empty');
+            }
+        });
+        })
+        
     }
 })

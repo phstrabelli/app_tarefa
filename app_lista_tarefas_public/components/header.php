@@ -20,14 +20,13 @@ $currentPage = basename($_SERVER['PHP_SELF'])
     <script src="./js/others.js"></script>
     <script src="./js/calendar.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
-    <header id="tarefa-header">
+    <!-- <header id="tarefa-header">
 
         <nav class="container d-none d-md-flex">
-            <div class="menu">
+            <div class="menu-header">
                 <ul>
                     <li><a href="index.php" class="<?php echo ($currentPage == 'tarefas_pendentes.php') ? 'active' : ''; ?>">Tarefas pendentes</a></li>
                     <li><a href="nova_tarefa.php" class="<?php echo ($currentPage == 'nova_tarefa.php') ? 'active' : ''; ?>">Nova tarefa</a></li>
@@ -48,4 +47,4 @@ $currentPage = basename($_SERVER['PHP_SELF'])
                         <span></span>
                     </div>
             </div>
-    </header>
+    </header> -->

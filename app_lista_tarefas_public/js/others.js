@@ -4,15 +4,15 @@ $(document).ready(function () {
 
     });
 
-    $('#btnNewTask').on('click', (e) => {
+    // $('#btnNewTask').on('click', (e) => {
         
-        let value = $('#inputNewTask').val().trim(); 
+    //     let value = $('#inputNewTask').val().trim(); 
         
-        if (value.length === 0) {
-            e.preventDefault(); 
-            alert('Preencha o campo corretamente'); 
-        }
-    });
+    //     if (value.length === 0) {
+    //         e.preventDefault(); 
+    //         alert('Preencha o campo corretamente'); 
+    //     }
+    // });
 
     $(document).on('click','.editBtn', (e)=> {
         let element = $(e.target)
@@ -39,14 +39,14 @@ $(document).ready(function () {
         e.stopPropagation();
         
         if (icons.is(':visible')) {
-            icons.animate({ opacity: 0 , height: '0px' }, 500, function() {
+            icons.animate({ opacity: 0 , height: '0px' }, 200, function() {
                 icons.hide(); 
             });
         } else {
                 icons.css('display','flex')
                 icons.css('justify-content','space-between')
                 icons.css('flex-flow','column')
-                icons.show().animate({ opacity: 1 , height: '90px' }, 500);
+                icons.show().animate({ opacity: 1 , height: '70px' }, 200);
         }
     })
 
@@ -61,6 +61,9 @@ $(document).ready(function () {
         }
     });
     
-        
+
+    $('.tarefa-title').on('click', (e)=>{
+        $(e.currentTarget).removeClass('empty')
+    })
 });
 

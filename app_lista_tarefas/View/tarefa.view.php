@@ -147,4 +147,38 @@ class TarefaService
 
         $stmt->execute();
     }
+    public function atualizar_data($tarefa,$id)
+    {
+        $query = '
+            update 
+                tb_tarefas
+            set
+                data = :data    
+            where
+                id = :id';
+
+        $stmt = $this->conexao->prepare($query);
+
+        $stmt->bindValue(':data', $tarefa);
+        $stmt->bindValue(':id', $id);
+
+        $stmt->execute();
+    }
+    public function atualizar_horario($tarefa,$id)
+    {
+        $query = '
+            update 
+                tb_tarefas
+            set
+                horario = :horario    
+            where
+                id = :id';
+
+        $stmt = $this->conexao->prepare($query);
+
+        $stmt->bindValue(':horario', $tarefa);
+        $stmt->bindValue(':id', $id);
+
+        $stmt->execute();
+    }
 }
