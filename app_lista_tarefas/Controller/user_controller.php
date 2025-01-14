@@ -36,7 +36,7 @@ if ($acao == 'inserir') {
     
     if (password_verify($_POST['password'], $userData->senha)) {
         $_SESSION['id'] = $userData->id;
-        header('Location: tarefas_pendentes.php')   ;
+        header('Location: todas_tarefas.php')   ;
     } else {
         header('Location: index.php?busca=0');
     }

@@ -1,41 +1,3 @@
-// function editar(id, texto, event) {
-//     let tarefa = '#tarefa_' + id
-//     $(event.target).css('pointer-events', 'none')
-//     let form = document.createElement('form');
-//     form.action = 'tarefa_controller.php?acao=atualizar';
-//     form.method = 'POST';
-//     $(form).addClass('row form')
-
-//     let inputTarefa = document.createElement('input');
-//     inputTarefa.type = 'text';
-//     inputTarefa.id = 'tarefa';
-//     inputTarefa.name = 'form-control';
-//     inputTarefa.value = texto
-//     $(inputTarefa).addClass('col-9 form-control')
-
-//     let inputId = document.createElement('input');
-//     inputId.type = 'hidden';
-//     inputId.name = 'id';
-//     inputId.value = id
-//     $(inputId).hide()
-
-
-//     let submitButton = document.createElement('input');
-//     submitButton.type = 'submit';
-//     $(submitButton).addClass('col-3 btn btn-info editBtn');
-//     $(submitButton).text('Atualizar')
-
-//     $(form).append(inputTarefa)
-//     $(form).append(inputId)
-//     $(form).append(submitButton)
-
-//     $(tarefa).html(form)
-
-
-//     // $(tarefa).before(form)
-
-// }
-
 
 function remove(id, action) {
     $('#confirmationPopup').fadeIn();
@@ -72,7 +34,7 @@ function checkAndRemove(id, action) {
             }
             if (action == 'remover' || action == 'atualizarStatusPendente') {
                 let tarefaDiv = '#tarefaDiv_' + id
-                $(tarefaDiv).attr('style', 'display: none !important');
+                // $(tarefaDiv).attr('style', 'display: none !important');
             }
         },
         error: erro => {
@@ -83,7 +45,7 @@ function checkAndRemove(id, action) {
 }
 
 $(document).ready(function () {
-    $('.tarefa-title').on('blur', function(e) {
+    $(document).on('blur','.tarefa-title', function(e) {
 
         let str = e.currentTarget.id;
         let id = str.split('_')[1];
@@ -97,7 +59,7 @@ $(document).ready(function () {
         editar(id,acao,tarefa)
     }); 
 
-    $('.content-tarefa-obs').on('blur', function(e) {
+    $(document).on('blur','.content-tarefa-obs', function(e) {
 
         let str = e.currentTarget.id;
         let id = str.split('_')[1];
@@ -107,7 +69,7 @@ $(document).ready(function () {
         editar(id,acao,tarefa)
     }); 
 
-    $('.calendario').on('change', function(e) {
+    $(document).on('change','.calendario', function(e) {
 
         let str = e.currentTarget.id;
         let id = str.split('_')[1];
@@ -117,7 +79,7 @@ $(document).ready(function () {
         editar(id,acao,tarefa)
     }); 
 
-    $('.horario').on('change', function(e) {
+    $(document).on('change', '.horario', function(e) {
 
         let str = e.currentTarget.id;
         let id = str.split('_')[1];

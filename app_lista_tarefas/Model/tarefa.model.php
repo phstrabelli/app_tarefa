@@ -8,6 +8,7 @@ class Tarefa {
     private $horario;
     private $data;
     private $obs;
+    private $categ_id;
 
     public function __get($attr) {
         return $this->$attr;

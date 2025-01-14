@@ -14,6 +14,7 @@ if ($acao == 'inserir') {
     $tarefa->__set('data', $_POST['data']);
     $tarefa->__set('horario', $_POST['horario']);
     $tarefa->__set('obs', $_POST['obs']);
+    $tarefa->__set('categ_id', $_POST['categ_id']);
     $tarefa->__set('id_user', $_SESSION['id']);
 
     $conexao = new Conexao();
@@ -22,7 +23,7 @@ if ($acao == 'inserir') {
     $tarefaService->inserir();
 
 
-    header('Location: tarefas_pendentes.php');
+    header('Location: todas_tarefas.php');
 
 } else if ($acao == 'recuperar') {
     $tarefa = new Tarefa();

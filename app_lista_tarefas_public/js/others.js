@@ -4,16 +4,6 @@ $(document).ready(function () {
 
     });
 
-    // $('#btnNewTask').on('click', (e) => {
-        
-    //     let value = $('#inputNewTask').val().trim(); 
-        
-    //     if (value.length === 0) {
-    //         e.preventDefault(); 
-    //         alert('Preencha o campo corretamente'); 
-    //     }
-    // });
-
     $(document).on('click','.editBtn', (e)=> {
         let element = $(e.target)
         let form = element.parent();
@@ -28,13 +18,13 @@ $(document).ready(function () {
         
     })
 
-    $('.tarefa').on('click', (e)=> {
+    $(document).on('click','.tarefa', (e)=> {
         $('.tarefa').removeClass('active');
         $(e.currentTarget).addClass('active')
         
     })
 
-    $('.pontinhos').on('click', (e)=> {
+    $(document).on('click','.pontinhos', (e)=> {
         let icons = $(e.currentTarget).next();
         e.stopPropagation();
         
@@ -62,7 +52,7 @@ $(document).ready(function () {
     });
     
 
-    $('.tarefa-title').on('click', (e)=>{
+    $(document).on('click','.tarefa-title', (e)=>{
         $(e.currentTarget).removeClass('empty')
     })
 });

@@ -12,7 +12,7 @@ class TarefaService
 
     public function inserir()
     {
-        $query = 'insert into tb_tarefas(tarefa, id_user,data,horario, obs)values(:tarefa, :id_user, :data, :horario, :obs)';
+        $query = 'insert into tb_tarefas(tarefa, id_user,data,horario, obs, categ_id)values(:tarefa, :id_user, :data, :horario, :obs,:categ_id)';
 
         $stmt = $this->conexao->prepare($query);
 
@@ -21,6 +21,7 @@ class TarefaService
         $stmt->bindValue(':data', $this->tarefa->__get('data'));
         $stmt->bindValue(':horario', $this->tarefa->__get('horario'));
         $stmt->bindValue(':obs', $this->tarefa->__get('obs'));
+        $stmt->bindValue(':categ_id', $this->tarefa->__get('categ_id'));
 
         $stmt->execute();
     }
@@ -28,12 +29,12 @@ class TarefaService
     {   
         $query = '
             select 
-                t.id, t.id_user, s.status, t.tarefa, t.data, t.horario,t.obs
+                t.id, t.id_user, s.status, t.tarefa, t.data, t.horario,t.obs, t.categ_id, t.id_status
             from 
                 tb_tarefas as t
                 left join tb_status as s on(t.id_status = s.id) 
             where
-                t.id_user = :id_user
+                t.id_user = :id_user AND t.id_status != 0 
             ';
 
         $stmt = $this->conexao->prepare($query);
