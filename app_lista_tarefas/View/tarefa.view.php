@@ -12,7 +12,7 @@ class TarefaService
 
     public function inserir()
     {
-        $query = 'insert into tb_tarefas(tarefa, id_user,data,horario, obs, categ_id)values(:tarefa, :id_user, :data, :horario, :obs,:categ_id)';
+        $query = 'insert into tb_tarefas(tarefa, id_user,data,horario, obs, categ_id, importancia_id)values(:tarefa, :id_user, :data, :horario, :obs,:categ_id, :importancia_id)';
 
         $stmt = $this->conexao->prepare($query);
 
@@ -22,6 +22,7 @@ class TarefaService
         $stmt->bindValue(':horario', $this->tarefa->__get('horario'));
         $stmt->bindValue(':obs', $this->tarefa->__get('obs'));
         $stmt->bindValue(':categ_id', $this->tarefa->__get('categ_id'));
+        $stmt->bindValue(':importancia_id', $this->tarefa->__get('importancia_id'));
 
         $stmt->execute();
     }
@@ -29,7 +30,7 @@ class TarefaService
     {   
         $query = '
             select 
-                t.id, t.id_user, s.status, t.tarefa, t.data, t.horario,t.obs, t.categ_id, t.id_status
+                t.id, t.id_user, s.status, t.tarefa, t.data, t.horario,t.obs, t.categ_id, t.id_status, t.importancia_id
             from 
                 tb_tarefas as t
                 left join tb_status as s on(t.id_status = s.id) 
@@ -178,6 +179,24 @@ class TarefaService
         $stmt = $this->conexao->prepare($query);
 
         $stmt->bindValue(':horario', $tarefa);
+        $stmt->bindValue(':id', $id);
+
+        $stmt->execute();
+    }
+
+    public function atualizar_importancia($tarefa,$id)
+    {
+        $query = '
+            update 
+                tb_tarefas
+            set
+                importancia_id = :importancia    
+            where
+                id = :id';
+
+        $stmt = $this->conexao->prepare($query);
+
+        $stmt->bindValue(':importancia', $tarefa);
         $stmt->bindValue(':id', $id);
 
         $stmt->execute();

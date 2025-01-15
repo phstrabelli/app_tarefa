@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $_SESSION['id_status'] = '';
 $_SESSION['id_categ'] = '';
+$_SESSION['id_importancia'] = '';
 
 
 $acao = 'recuperar';

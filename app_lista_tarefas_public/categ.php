@@ -3,6 +3,7 @@
 session_start();
 
 $_SESSION['id_status'] = '';
+$_SESSION['id_importancia'] = '';
 $_SESSION['id_categ'] = $id;
 
 $acao = 'recuperar';

@@ -5,6 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $id_status = isset($_SESSION['id_status']) ? $_SESSION['id_status'] : '';
 $id_categ = isset($_SESSION['id_categ']) ? $_SESSION['id_categ'] : '';
+$id_importancia = isset($_SESSION['id_importancia']) ? $_SESSION['id_importancia'] : '';
 
 $acao = 'recuperar';
 require 'tarefa_controller.php';
@@ -32,7 +33,7 @@ if ($order == 'dat-asc') {
 
 ?>
 
-<?php if ($id_status == '' && $id_categ == '') : ?>
+<?php if ($id_status == '' && $id_categ == '' && $id_importancia == '') : ?>
     <?php foreach ($tarefas as $tarefa) : ?>
         <?php
         $tarefaHorario = $tarefa->data . ' ' . $tarefa->horario;
@@ -78,27 +79,21 @@ if ($order == 'dat-asc') {
         $dataTarefa = new DateTime($tarefaHorario);
         ?>
         <?php if ($tarefa->categ_id == $id_categ) : ?>
-            <div class="tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
-                <div id='tarefa_<?= $tarefa->id ?>' class="tarefa-title" contenteditable><?= $tarefa->tarefa ?></div>
-
-                <div class="tarefa-obs">
-                    <p id='tarefaObs_<?= $tarefa->id ?>' class="content-tarefa-obs" contenteditable><?= $tarefa->obs ?></p>
-                </div>
-
-                <div class="tarefa-data">
-                    <input id='tarefaData_<?= $tarefa->id ?>' type="text" class='calendario' value="<?= $tarefa->data ?>">
-                    <input id='tarefaHorario_<?= $tarefa->id ?>' type="time" id="horario" name="horario" class='horario' value="<?= date('H:i', strtotime($tarefa->horario)) ?>">
-                </div>
-
-
-                <div class="tarefa-options">
-                    <div class="pontinhos"><img src="./img/mostrar-mais-botao-com-tres-pontos.png" alt=""></div>
-                    <div class="icons">
-                        <i class="fas fa-trash-alt  " onclick="remove(<?= $tarefa->id ?>, 'remover')">Excluir</i>
-                        <i class="fas fa-check-square  " onclick="checkAndRemove(<?= $tarefa->id ?>, 'atualizarStatusPendente')">Concluido</i>
-                    </div>
-                </div>
-            </div>
+            <?php require './components/tarefas.php' ?>
         <?php endif ?>
     <?php endforeach ?>
 <?php endif ?>
+
+<?php if ($id_importancia != '') : ?>
+    <?php foreach ($tarefas as $tarefa) : ?>
+        <?php
+        $tarefaHorario = $tarefa->data . ' ' . $tarefa->horario;
+
+        $dataTarefa = new DateTime($tarefaHorario);
+        ?>
+        <?php if ($tarefa->importancia_id == $id_importancia) : ?>
+            <?php require './components/tarefas.php' ?>
+        <?php endif ?>
+    <?php endforeach ?>
+<?php endif ?>
+

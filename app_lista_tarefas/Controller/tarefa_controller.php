@@ -15,6 +15,7 @@ if ($acao == 'inserir') {
     $tarefa->__set('horario', $_POST['horario']);
     $tarefa->__set('obs', $_POST['obs']);
     $tarefa->__set('categ_id', $_POST['categ_id']);
+    $tarefa->__set('importancia_id', $_POST['importancia_id']);
     $tarefa->__set('id_user', $_SESSION['id']);
 
     $conexao = new Conexao();
@@ -96,5 +97,17 @@ if ($acao == 'inserir') {
     $tarefa = $_GET['tarefa'];
     $id = $_GET['id'];
     $tarefas = $tarefaService->atualizar_horario($tarefa, $id);
+
+} else if($acao == 'editar_importancia') {
+    
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $tarefa = $_GET['tarefa'];
+    $id = $_GET['id'];
+    $tarefas = $tarefaService->atualizar_importancia($tarefa, $id);
 
 }

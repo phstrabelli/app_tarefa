@@ -3,8 +3,9 @@ $id = isset($_POST['id']) ? $_POST['id'] : '';
 
 session_start();
 
-$_SESSION['id_status'] = $id;
+$_SESSION['id_importancia'] = '';
 $_SESSION['id_categ'] = '';
+$_SESSION['id_status'] = $id;
 
 $acao = 'recuperar';
 require 'tarefa_controller.php';

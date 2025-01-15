@@ -377,6 +377,14 @@ h4 {
                 width: 100%;
                 resize: none;
             }
+            div {
+                display: flex;
+                justify-content: space-between;
+                div {
+                    display: flex;
+                    flex-flow: column;
+                }
+            }
         }
     }
 }
@@ -465,4 +473,8 @@ h4 {
     //     top: 50%;
     //     transform: translate(0,-50%);
     // }
+}
+
+.importancia-select {
+    display: none;
 }

@@ -10,16 +10,19 @@ if ($acao == 'inserir') {
 
     $categ = new Categ();
 
-    $categ->__set('categ', $_POST['categ']);
+    $categ->__set('categ', $_GET['categ']);
     $user_id = $_SESSION['id'];
 
     $conexao = new Conexao();
 
     $categService = new CategService($conexao, $categ);
-    $categService->inserir($user_id);
+    
+    $new_categ = $categService->inserir($user_id);
 
-
-    header('Location: todas_tarefas.php');
+?>
+    <div><?= $new_categ ?></div>
+<?php
+    // header('Location: todas_tarefas.php');   
 
 }else if ($acao == 'recuperar') {
     $categ = new Categ();

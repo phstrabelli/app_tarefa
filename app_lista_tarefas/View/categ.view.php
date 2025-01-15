@@ -21,8 +21,6 @@ class CategService
         $stmt1->execute();
 
 
-
-
         $query = '
         select *from tb_categ ORDER BY id DESC LIMIT 1
         ';
@@ -38,11 +36,12 @@ class CategService
 
         $stmt3 = $this->conexao->prepare($query);
         
-        var_dump($categ);
         $stmt3->bindValue(':categ_id', $categ);
         $stmt3->bindValue(':user_id', $user_id);
         
         $stmt3->execute();
+
+        return $categ;
     }
 
     public function recuperar()

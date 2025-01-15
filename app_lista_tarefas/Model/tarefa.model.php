@@ -9,6 +9,7 @@ class Tarefa {
     private $data;
     private $obs;
     private $categ_id;
+    private $importancia_id;
 
     public function __get($attr) {
         return $this->$attr;

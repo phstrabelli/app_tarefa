@@ -34,7 +34,7 @@ function checkAndRemove(id, action) {
             }
             if (action == 'remover' || action == 'atualizarStatusPendente') {
                 let tarefaDiv = '#tarefaDiv_' + id
-                // $(tarefaDiv).attr('style', 'display: none !important');
+                $(tarefaDiv).attr('style', 'display: none !important');
             }
         },
         error: erro => {
@@ -88,6 +88,16 @@ $(document).ready(function () {
                 
         editar(id,acao,tarefa)
     }); 
+
+    $(document).on('change', '.importancia-select', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'importancia'
+        let importancia = $(e.currentTarget).val()
+
+        editar(id,acao, importancia)
+    })
 
 
 
