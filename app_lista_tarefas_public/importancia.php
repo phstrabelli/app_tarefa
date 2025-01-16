@@ -25,9 +25,11 @@ if($id == 1)
     <div class="pagina col-8">
         <div class="col-12">
             <h4><?= $titulo ?></h4>
-            <div id="btnNewTask"> Nova tarefa <span>+</span></div>
-
-            <?php require_once './components/order_menu.php'; ?>
+            <div class="extra-btns">
+				<div id="btnNewTask"> Nova tarefa <span>+</span></div>
+	
+				<?php require_once './components/order_menu.php';?>
+			</div>
 
             <div class="tarefas">
                 <?php require 'sort_tasks.php'; ?>

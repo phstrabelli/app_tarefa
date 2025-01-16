@@ -20,9 +20,11 @@ require_once 'categ_controller.php';
 	<div class="pagina col-8">
 		<div class="col-12">
 			<h4>Todas as tarefas</h4>
-			<div id="btnNewTask"> Nova tarefa <span>+</span></div>
-
-			<?php require_once './components/order_menu.php';?>
+			<div class="extra-btns">
+				<div id="btnNewTask"> Nova tarefa <span>+</span></div>
+	
+				<?php require_once './components/order_menu.php';?>
+			</div>
 			
 			<div class="tarefas">
 				<?php

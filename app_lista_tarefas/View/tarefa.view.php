@@ -201,4 +201,21 @@ class TarefaService
 
         $stmt->execute();
     }
+    public function atualizar_categ($tarefa,$id)
+    {
+        $query = '
+            update 
+                tb_tarefas
+            set
+                categ_id = :categ    
+            where
+                id = :id';
+
+        $stmt = $this->conexao->prepare($query);
+
+        $stmt->bindValue(':categ', $tarefa);
+        $stmt->bindValue(':id', $id);
+
+        $stmt->execute();
+    }
 }

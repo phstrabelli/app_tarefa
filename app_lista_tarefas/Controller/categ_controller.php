@@ -22,8 +22,6 @@ if ($acao == 'inserir') {
 ?>
     <div><?= $new_categ ?></div>
 <?php
-    // header('Location: todas_tarefas.php');   
-
 }else if ($acao == 'recuperar') {
     $categ = new Categ();
 
@@ -32,4 +30,16 @@ if ($acao == 'inserir') {
     $categService = new CategService($conexao, $categ);
 
     $categorias = $categService->recuperar();
+} else if ($acao == 'remover') {
+    session_start();
+
+    $categ = new Categ();
+
+    $conexao = new Conexao();
+
+    $categService = new CategService($conexao, $categ);
+
+    $categService->remover($_POST['categ_id']);
+
+    header('Location: todas_tarefas.php');
 }

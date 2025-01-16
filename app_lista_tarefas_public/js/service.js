@@ -65,8 +65,12 @@ $(document).ready(function () {
         let id = str.split('_')[1];
         let acao = 'obs'
         let tarefa = $(e.currentTarget).text()
-
+    
         editar(id,acao,tarefa)
+
+        if ($(e.currentTarget).text().trim() === '') {
+            $(e.currentTarget).addClass('empty-obs');
+        }
     }); 
 
     $(document).on('change','.calendario', function(e) {
@@ -97,6 +101,16 @@ $(document).ready(function () {
         let importancia = $(e.currentTarget).val()
 
         editar(id,acao, importancia)
+    })
+
+    $(document).on('change', '.categ-select', function(e) {
+
+        let str = e.currentTarget.id;
+        let id = str.split('_')[1];
+        let acao = 'categ'
+        let categ = $(e.currentTarget).val()
+
+        editar(id,acao, categ)
     })
 
 
@@ -130,15 +144,14 @@ $(document).ready(function () {
             $this.addClass('empty');
             }
 
-        $this.on('blur', function() {
-            console.log('ada')
-            if ($this.text().trim() === '') {
-                $this.addClass('empty');
-            } else {
-                $this.removeClass('empty');
-            }
-        });
         })
-        
+
+        $('.content-tarefa-obs').each(function () {
+            let $this = $(this);
+            
+            if ($this.text().trim() === '') {
+            $this.addClass('empty-obs');
+            }
+        })
     }
 })

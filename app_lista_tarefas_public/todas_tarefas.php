@@ -23,29 +23,29 @@ require_once 'categ_controller.php';
 	<div class=" menu">
 			<nav>
 				<ul class="ul">
-					<li class="itens" id="todas-tarefas">Todas</li>
+					<li class="itens li_hover" id="todas-tarefas">Todas</li>
 					<li class="itens">
 						Situação
 						<ul class="menu-itens">
-							<li status-id='2' class="status_li">Realizada</li>
-							<li status-id='1' class="status_li">Pendente</li>
-							<li status-id='3' class="status_li">Atrasada</li>
+							<li status-id='2' class="status_li li_hover">Realizada</li>
+							<li status-id='1' class="status_li li_hover">Pendente</li>
+							<li status-id='3' class="status_li li_hover">Atrasada</li>
 						</ul>
 					</li>
 					<li class="itens">
 						Categorias
 						<ul class="menu-itens">
 							<?php foreach ($categorias as $categ): ?>
-								<li categ-id="<?= $categ->id ?>" class="categ_li"><?= $categ->categ ?></li>
+								<li categ-id="<?= $categ->id ?>" class="categ_li li_hover"><?= $categ->categ ?></li>
 							<?php endforeach ?>
 						</ul>
 					</li>
 					<li class="itens">
 						Importancia
 						<ul class="menu-itens">
-							<li class="importancia_li" importancia-id='1'>Urgente</li>
-							<li class="importancia_li" importancia-id='2'>Necessário</li>
-							<li class="importancia_li" importancia-id='3'>Posso Fazer Depois</li>
+							<li class="importancia_li li_hover" importancia-id='1'>Urgente</li>
+							<li class="importancia_li li_hover" importancia-id='2'>Necessário</li>
+							<li class="importancia_li li_hover" importancia-id='3'>Posso Fazer Depois</li>
 						</ul>
 					</li>
 				</ul>
@@ -274,6 +274,49 @@ require_once 'categ_controller.php';
 			p.style.display = 'block';
 		})
 
+		$(document).on('click', '.categ-p', function(e) {
+			e.currentTarget.style.display = 'none';
+			let value = $(e.currentTarget).attr('value')
+			let select = $(e.currentTarget).siblings('.categ-select')[0]
+
+			$(select).val(value)
+			select.style.display = 'block';
+			select.focus()
+		})
+
+		$(document).on('blur', '.categ-select', function(e) {
+			e.currentTarget.style.display = 'none';
+			let p = $(e.currentTarget).siblings('.categ-p')[0]
+			let value = $(e.currentTarget).val()
+			let text = $(this).find('option:selected').text()
+
+			$(p).attr('value', value)
+			$(p).text(text)
+			if($(p).text() == '')
+				$(p).text('Nenhuma Categoria')	
+			
+			p.style.display = 'block';
+		})
+
+		$(document).on('click','.span-new-categ', function(e) {
+			$(e.currentTarget).css('margin-top', '0')
+			$(e.currentTarget).css('margin-bottom', '.5rem')
+			$('#categ_id').css('display','none')
+			$('#categ-label').css('display','none')	
+			$('#form-new-categ').css('display', 'flex')
+			$('.categ-div').css('height', '103px')
+			$('.importancia-div').css('height', '103px')
+		})
+
+		$(document).on('click', '#categ-btn', function(e) {
+			$('.span-new-categ').css('margin-top', '10px')
+			$('.span-new-categ').css('margin-bottom', '0')
+			$('#categ_id').css('display','block')
+			$('#categ-label').css('display','block')	
+			$('#form-new-categ').css('display', 'none')
+			$('.categ-div').css('height', 'fit-content')
+			$('.importancia-div').css('height', 'fit-content')
+		})
 	})
 </script>
 </body>

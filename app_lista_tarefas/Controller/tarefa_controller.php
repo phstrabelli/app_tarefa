@@ -110,4 +110,16 @@ if ($acao == 'inserir') {
     $id = $_GET['id'];
     $tarefas = $tarefaService->atualizar_importancia($tarefa, $id);
 
+} else if($acao == 'editar_categ') {
+    
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $tarefa = $_GET['tarefa'];
+    $id = $_GET['id'];
+    $tarefas = $tarefaService->atualizar_categ($tarefa, $id);
+
 }

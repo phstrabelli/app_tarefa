@@ -55,5 +55,9 @@ $(document).ready(function () {
     $(document).on('click','.tarefa-title', (e)=>{
         $(e.currentTarget).removeClass('empty')
     })
+
+    $(document).on('click','.content-tarefa-obs', (e)=>{
+        $(e.currentTarget).removeClass('empty-obs')
+    })
 });
 

@@ -64,4 +64,32 @@ class CategService
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function remover($categ_id)
+    {   
+        $query = '
+            DELETE from 
+                tb_categ
+            where
+                tb_categ.id = :categ_id
+            ';
+
+        $stmt = $this->conexao->prepare($query);
+        $stmt->bindValue(':categ_id', $categ_id);
+        $stmt->execute();
+        
+        $query = '
+            DELETE from 
+                tb_usuarios_categ
+            where
+                tb_usuarios_categ.usuario_id = :id_user
+                AND
+                tb_usuarios_categ.categ_id = :categ_id
+            ';
+
+        $stmt2 = $this->conexao->prepare($query);
+        $stmt2->bindValue(':id_user', $_SESSION['id']);
+        $stmt2->bindValue(':categ_id', $categ_id);
+        $stmt2->execute();
+
+    }
 }

@@ -128,6 +128,31 @@ body {
     margin-top: 25px;
     display: flex;
     justify-content: center;
+    .categ-title {
+        display: flex;
+        border-bottom: 3px solid $light-purple;
+        padding-bottom: 10px;
+        margin-bottom: 20px ;
+        justify-content: space-between;
+        h4 {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            border-bottom: 0px solid $light-purple;
+        }
+        #formRemoveCateg {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            button {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                &:hover {
+                    scale: 0.95;
+                }
+            }
+        }
+    }
 }
 
 .pagina {
@@ -237,7 +262,6 @@ h4 {
     display: flex;
     justify-content: space-between;
     flex-flow: wrap;
-    // padding: 20px;
     gap: 30px 0;
 
     .tarefa {
@@ -257,6 +281,7 @@ h4 {
             padding: 0 0 0 5px;
             width: 80%;
         }
+
 
         &-obs {
             position: relative;
@@ -319,7 +344,7 @@ h4 {
                 top: 30px;
                 right: 0%;
                 padding: 10px;
-                border: 2px solid black;
+                border: 2px solid rgba(0, 0, 0, 0.829);
 
                 i {
                     // justify-content: space-between;
@@ -330,10 +355,26 @@ h4 {
                     gap: 20px;
 
                     &:hover {
-                        scale: 0.9;
+                        scale: 0.98;
                     }
 
                 }
+            }
+        }
+        &-extras {
+            display: flex;
+            flex-flow: column;
+            gap: 10px;
+            .importancia-p, .categ-p {
+                font-size: 14px;
+                padding: 0 0 0 5px;
+                margin-bottom: 0px;
+            }
+            .importancia-select, .categ-select {
+                font-size: 14px;
+                width: fit-content;
+                background-color: transparent;
+                border-radius: 3px;
             }
         }
     }
@@ -349,48 +390,113 @@ h4 {
 
 #formNovaTarefa {
     form {
+        position: relative;
         background-color: white;
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 700px;
-        height: 400px;
+        height: 450px;
         display: flex;
         flex-flow: wrap;
         justify-content: center;
-        padding: 15px;
+        padding: 20px;
         border-radius: 20px;
 
         .form-group {
             width: 100%;
+            display: flex;
+            flex-flow: wrap;
+            gap: 20px;
 
-            label {
+            .label-input {
+                display: flex;
+                flex-flow: column;
+            }
+            input, select {
+                height: 38px;
+                background-color: transparent;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+                &:focus {
+                    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+                }
+            }
+            #inputNewTask, #inputNewTask-label {
+                width: 100%;
+            }
+            #data,#data-label, #horario, #horario-label,.form-control {
                 width: 100%;
             }
 
-            input {
-                width: 100%;
+            #horario:focus-visible,select,textarea {
+                outline: none !important;
             }
-
             textarea {
                 width: 100%;
                 resize: none;
+                border-radius: .25rem;
+                &:focus {
+                    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);    
+                }
             }
-            div {
+            
+            .task-extras {
                 display: flex;
-                justify-content: space-between;
+                gap: 20px;
+                padding: 0;
                 div {
                     display: flex;
                     flex-flow: column;
                 }
             }
+
+            .new-categ {
+                .span-new-categ {
+                    font-size: 15px;
+                    margin-top: 10px;
+                    cursor: pointer;
+                }
+                #form-new-categ {
+                    display: none;
+                    #categ-btn {
+                        height: 10px;
+                        margin-top: 5px;
+                        border: none;
+                        background-color: $dark-purple;
+                        border-radius: 3px;
+                        &:hover {
+                            scale: 0.99;
+                        }
+                    }
+                }
+            }
+        }
+
+        #btnCadastro {
+            background-color: $dark-purple;
+            color: white;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translate(-50%,0);
         }
     }
 }
 
 .empty::before {
     content: "Título";
+    color: #aaaaaad2;
+    position: absolute;
+    font-size: 16px;
+    top: 50%;
+    left: 5px;
+    transform: translate(0, -50%);
+    pointer-events: none;
+}
+.empty-obs::before {
+    content: "Observação";
     color: #aaaaaad2;
     position: absolute;
     font-size: 16px;
@@ -444,10 +550,11 @@ h4 {
         }
     }
 }
+
 #btnNewTask {
     display: flex;
     position: relative;
-    align-items: center;
+    // align-items: center;
     margin-bottom: 20px;
     width: fit-content;
     cursor: pointer;
@@ -462,19 +569,69 @@ h4 {
         border: 2px solid black;
         border-radius: 50%;
     }
-    // &::after {
-    //     content: '+';
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     position: absolute;
-    //     height: 20px;
-    //     width: 20px;
-    //     top: 50%;
-    //     transform: translate(0,-50%);
-    // }
 }
 
-.importancia-select {
+.importancia-select, .categ-select {
     display: none;
+}
+
+.order-menu {
+    max-height: 35px;
+    overflow: hidden;
+    transition: 1s;
+    border: 2px solid $light-purple;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    &:hover {
+        max-height: 500px;
+    }
+
+    .order-btn {
+        padding: 5px;
+        border-top: 0px solid $light-purple;
+        border-bottom: 0px solid $light-purple;
+        cursor: pointer;
+
+        &:hover {
+            border-top: 2px solid $light-purple;
+            border-bottom: 2px solid $light-purple;
+        }
+        &:last-child {
+            &:hover {
+                border-bottom: 0px solid $light-purple;
+            }
+        }
+        &:first-child {
+            &:hover {
+                border-top: 0px solid $light-purple;
+            }
+        }
+    }
+}
+
+.extra-btns {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.li_hover {
+    position: relative;
+    width: fit-content;
+
+    &::after {
+        content: '';
+        position: absolute;
+        height: 3px;
+        width: 0%;
+        background-color: $light-purple;
+        left: 0;
+        bottom: 0;
+        transition: 0.5s;
+    }
+    &:hover {
+        &::after {
+            width: 100%;
+        }
+    }
 }

@@ -1,35 +1,46 @@
 <div class="popup" id='formNovaTarefa'>
     <form method="post" action="tarefa_controller.php?acao=inserir" class="form-nova-tarefa">
         <div class="form-group">
-            <label for="inputNewTask">Descrição da tarefa:</label>
-            <input type="text" id='inputNewTask' class="form-control" name='tarefa' placeholder="Exemplo: Lavar o carro">
 
-            <label for="data">Selecione a data:</label>
-            <input name='data' id="data">
+            <div class="label-input col-12" >
+                <label for="inputNewTask" class="inputNewTask-label">Descrição da tarefa:</label>
+                <input type="text" id='inputNewTask' class="form-control" name='tarefa' placeholder="Exemplo: Lavar o carro">
+            </div>
 
-            <label for="horario">Selecione o horário:</label>
-            <input type="time" id="horario" name="horario">
+            <div class="label-input col-5">
+                <label for="data" id="data-label">Selecione a data:</label>
+                <input name='data' id="data">
+            </div>
 
-            <label for="obs">Observação:</label>
-            <textarea id="obs" name="obs"></textarea>
+            <div class="label-input col-5"> 
+                <label for="horario" id="horario-label">Selecione o horário:</label>
+                <input type="time" id="horario" name="horario">
+            </div>
+            
+            <div class="label-input col-12"> 
+                <label for="obs">Observação:</label>
+                <textarea id="obs" name="obs"></textarea>
+            </div>
 
 
-            <div>
-                <div>
-                    <label for="categ_id">Categoria:</label>
+            <div class="task-extras col-12">
+                <div class="col-5 categ-div">
+                    <label for="categ_id" id="categ-label">Categoria:</label>
                     <select name="categ_id" id="categ_id">
                         <option value="">Nenhuma</option>
                         <?php foreach ($categorias as $categ) : ?>
                             <option value="<?= $categ->id ?>"><?= $categ->categ ?></option>
                         <?php endforeach ?>
                     </select>
-                    <span class="new-categ">+</span>
-                    <div id="form-new-categ">
-                        <input name='categ' id="categ" type="text">
-                        <button type="button" id="categ-btn"></button>
+                    <div class="new-categ">
+                        <span class="span-new-categ">Nova categoria +</span>
+                        <div id="form-new-categ">
+                            <input name='categ' id="categ" type="text">
+                            <button type="button" id="categ-btn"></button>
+                        </div>
                     </div>
                 </div>
-                <div>
+                <div class="col-5 importancia-div">
                     <label for="importancia_id">Importancia:</label>
                     <select name="importancia_id" id="importancia_id">
                         <option value="3">Posso Fazer Depois</option>
@@ -40,6 +51,6 @@
             </div>
 
         </div>
-        <button class="btn btn-success" id="btnNewTask">Cadastrar</button>
+        <button class="btn" id="btnCadastro">Cadastrar</button>
     </form>
 </div>
