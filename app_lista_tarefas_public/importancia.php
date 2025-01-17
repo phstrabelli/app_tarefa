@@ -22,7 +22,7 @@ if($id == 1)
 ?>
 
 <div class="container app">
-    <div class="pagina col-8">
+    <div class="pagina">
         <div class="col-12">
             <h4><?= $titulo ?></h4>
             <div class="extra-btns">

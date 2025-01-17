@@ -12,11 +12,7 @@ require_once 'categ_controller.php';
 <?php include_once './components/header.php' ?>
 
 <main>
-	<div id="logout">
-		<form action="user_controller.php?acao=deslogar" method="post"">
-            <button ></button>
-        </form>
-    </div>
+	
 
 	<?php include_once './components/svg_bg.php' ?>
 	
@@ -87,11 +83,13 @@ require_once 'categ_controller.php';
 		})
 
 		$(document).on('click', '#btnNewTask', () => {
-			$('#formNovaTarefa').fadeToggle()
+			$('.formNovaTarefa').fadeToggle()
+			document.body.style.overflow = 'hidden'
 		})
-
-		$(document).on('click', '#formNovaTarefa', () => {
-			$('#formNovaTarefa').fadeToggle()
+		
+		$(document).on('click', '.formNovaTarefa', () => {
+			$('.formNovaTarefa').fadeToggle()
+			document.body.style.overflow = 'auto'
 		})
 
 		$(document).on('click', '.form-nova-tarefa', function(e) {
@@ -316,6 +314,60 @@ require_once 'categ_controller.php';
 			$('#form-new-categ').css('display', 'none')
 			$('.categ-div').css('height', 'fit-content')
 			$('.importancia-div').css('height', 'fit-content')
+		})
+
+		$(document).on('click', '.menu-burguer', function(e) {
+			let burguer = $('.menu-burguer');
+			let menu = $('.off-screen-menu')
+
+			burguer.toggleClass('active');
+			menu.toggleClass('active');
+			
+			verifyActiveMenuBurguer(burguer,menu)
+		})
+
+		$('.li_hover').on('click', function(e) {
+			$('.off-screen-menu').removeClass('active')
+			$('.menu-burguer').removeClass('active')
+
+			verifyActiveMenuBurguer($('.menu-burguer'),$('.off-screen-menu'))
+		})
+
+		function verifyActiveMenuBurguer(burguer, menu) {
+			let firstSpan = $('.menu-burguer').children()[0]
+			let middleSpan = $('.menu-burguer').children()[1]
+			let lastSpan = $('.menu-burguer').children()[2]
+
+			if (burguer.hasClass('active')) {
+				$(middleSpan).css('opacity', '0');
+				$(firstSpan).css({ top: '50%', transform: 'rotate(45deg)' });
+				$(lastSpan).css({ top: '50%', transform: 'rotate(-45deg)' });
+
+				document.body.style.overflow = 'hidden';
+				$(menu).css({ right: '0'});
+			} else {
+				$(middleSpan).css('opacity', '1');
+				$(firstSpan).css({ top: '25%', transform: 'rotate(0)' });
+				$(lastSpan).css({ top: '75%', transform: 'rotate(0)' });
+				
+				document.body.style.overflow = 'auto';
+				$(menu).css({ right: '-500px'});
+			}
+		}
+
+		$(document).on('click', '.next-btn', function(e) {
+
+			// if($('#inputNewTask').val() == '' || $('#data').val() == '' || $('#horario').val() == '') {
+			// 	alert('Preencha todos os campos para continuar o cadastro.')
+			// }
+			// else {
+				$('.form-group-1').css('display', 'none')
+				$(e.currentTarget).css('display', 'none')
+				$('.form-group-2').css('display', 'block')
+				$('#btnCadastro').css('display', 'block')
+				$('.prev-btn').css('display', 'block')
+			// }
+			
 		})
 	})
 </script>

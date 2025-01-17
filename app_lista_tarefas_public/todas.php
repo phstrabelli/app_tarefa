@@ -17,7 +17,7 @@ require_once 'categ_controller.php';
 
 ?>
 <div class="container app">
-	<div class="pagina col-8">
+	<div class="pagina">
 		<div class="col-12">
 			<h4>Todas as tarefas</h4>
 			<div class="extra-btns">

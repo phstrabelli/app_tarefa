@@ -3,635 +3,854 @@ body {
     font-family: $font-family !important;
 }
 
-#tarefa-header {
-    .container {
-        display: flex;
-        justify-content: space-between;
 
-        .menu-header {
+.header-tarefa {
+    display: flex;
+    justify-content: space-between;
+    height: 51px;
+    position: relative;
+
+    #logout {
+        height: 100%;
+
+        button {
+            height: 50%;
+            width: 30px;
+        }
+    }
+
+    .menu-burguer {
+        position: relative;
+        height: 100%;
+        width: 40px;
+        cursor: pointer;
+
+        span {
+            position: absolute;
+            top: 50%;
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: black;
+            transition: .5s;
+
+            &:first-child {
+                top: 25%;
+            }
+
+            &:last-child {
+                top: 75%;
+            }
+        }
+    }
+
+    .off-screen-menu {
+        position: fixed;
+        top: 51px;
+        right: -500px;
+        background-color: $light-purple;
+        height: calc(100vh - 51px);
+        width: 300px;
+        z-index: 15;
+        transition: .7s;
+        border-radius: 10px 0 0 0px;
+
+        .menu-hidden {
+            color: white;
+            padding: 20px 0 0 20px ;
             ul {
-                height: 50px;
-                display: flex;
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                gap: 30px;
-
-                li {
-                    font-size: 20px;
-
-                    a {
-                        color: $dark-purple;
-                        display: flex;
-                        text-decoration: none;
-                        align-items: center;
-                        width: 100%;
-                        height: 100%;
-                        position: relative;
-
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            width: 0%;
-                            height: 3px;
-                            left: 0;
-                            bottom: 0;
-                            background-color: $dark-purple;
-                            transition: .3s ease-in-out;
-                        }
-
-                        &:hover {
-                            &::after {
-                                width: 100%;
-                            }
-                        }
-
-                        &.active {
-                            &::after {
-                                width: 100%;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        #logout {
-            z-index: 1;
-
-            button {
-                background-color: transparent;
-                border: none;
-                height: 100%;
-                width: 50px;
-                background-image: url('./img/logout.png');
-                background-repeat: no-repeat;
-                background-position: center center;
-
-                &:hover {
-                    scale: 0.90;
-                }
-            }
-        }
-    }
-
-    @include sm {
-        .container {
-            display: flex;
-            justify-content: flex-end;
-
-            #burguer-menu {
-                z-index: 2;
-                height: 50px;
-                width: 40px;
-                position: relative;
-
-                span {
-                    position: absolute;
-                    display: block;
-                    background-color: $dark-purple;
-                    width: 100%;
-                    height: 3px;
-                    border-radius: 2px;
-                    top: 50%;
-
-                    &:first-child {
-                        top: 25%;
-                    }
-
-                    &:last-child {
-                        top: 75%;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.svg-bg {
-    position: fixed;
-    top: -190px;
-    right: -70px;
-    z-index: -1;
-    transform: rotate(-15deg);
-}
-
-.svg-bg-2 {
-    position: fixed;
-    bottom: -200px;
-    left: 0px;
-    z-index: 0;
-    transform: rotate(-45deg);
-}
-
-.app {
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    .categ-title {
-        display: flex;
-        border-bottom: 3px solid $light-purple;
-        padding-bottom: 10px;
-        margin-bottom: 20px ;
-        justify-content: space-between;
-        h4 {
-            padding-bottom: 0 !important;
-            margin-bottom: 0 !important;
-            border-bottom: 0px solid $light-purple;
-        }
-        #formRemoveCateg {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0;
-            button {
-                background-color: transparent;
-                border: none;
-                cursor: pointer;
-                &:hover {
-                    scale: 0.95;
-                }
-            }
-        }
-    }
-}
-
-.pagina {
-    border-radius: 10px;
-    border: solid 3px $light-purple;
-    padding: 25px !important;
-}
-
-
-h4 {
-    color: $dark-purple !important;
-    border-bottom: 3px solid $light-purple;
-    margin-bottom: 20px !important;
-    padding-bottom: 10px;
-}
-
-.close {
-    background-color: red;
-    height: 20px;
-    width: 20px;
-}
-
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-
-    .popup-content {
-        background-color: white;
-        padding: 20px;
-        text-align: center;
-        width: 300px;
-        height: 300px;
-        border-radius: 20px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        p {
-            color: black;
-            font-weight: 500;
-            font-size: 20px;
-            text-align: start;
-            margin-bottom: 50px;
-        }
-
-
-        #noBtn,
-        #yesBtn {
-            align-items: center;
-            border: 0;
-            border-radius: 100px;
-            box-sizing: border-box;
-            color: #ffffff;
-            cursor: pointer;
-            display: inline-flex;
-            font-size: 16px;
-            font-weight: 600;
-            justify-content: center;
-            line-height: 20px;
-            min-height: 40px;
-            width: 100%;
-            overflow: hidden;
-            padding: 0px;
-            padding-left: 20px;
-            padding-right: 20px;
-            text-align: center;
-            touch-action: manipulation;
-            transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-            user-select: none;
-            -webkit-user-select: none;
-            vertical-align: middle;
-
-            &:hover {
-                scale: 0.98;
             }
 
-        }
-
-        #yesBtn {
-            background-color: $dark-purple;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        #noBtn {
-            color: rgba(0, 0, 0, 0.726);
-            border: 1.2px solid black;
-            background-color: transparent;
-        }
-
-    }
-}
-
-
-.form {
-    margin-bottom: 0 !important;
-}
-
-.tarefas {
-    display: flex;
-    justify-content: space-between;
-    flex-flow: wrap;
-    gap: 30px 0;
-
-    .tarefa {
-        width: 100%;
-        position: relative;
-        border: 3px solid $light-purple;
-        border-radius: 10px;
-        padding: 20px;
-        display: flex;
-        flex-flow: column;
-        gap: 10px;
-
-        &-title {
-            position: relative;
-            font-size: 16px;
-            font-weight: 500;
-            padding: 0 0 0 5px;
-            width: 80%;
-        }
-
-
-        &-obs {
-            position: relative;
-            overflow: hidden;
-            text-align: start;
-            max-height: 25px;
-            transition: 1s ease-in-out;
-            font-size: 15px;
-
-            p {
-                display: block;
-                white-space: normal;
-                margin: 0;
-                padding: 0 0 0 5px;
-            }
-        }
-
-        &-data {
-            font-size: 14px !important;
-            display: flex;
-            flex-flow: column;
-            gap: 10px;
-
-            .horario {
-                border: none;
-                background-color: transparent;
-                width: 75px;
-                padding: 0 0 0 5px;
-            }
-
-            .calendario {
-                font-size: 14px !important;
-                border: none;
-                background-color: transparent;
-                padding: 0 0 0 5px;
-                width: 150px;
-                color: black;
-            }
-        }
-
-        &-options {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-
-            .pontinhos {
-                pointer-events: all;
-                cursor: pointer;
-            }
-
-            .icons {
-                display: none;
-                position: absolute;
-                overflow: hidden;
-                width: 140px;
-                border-radius: 5px;
-                height: 0;
-                opacity: 0;
-                top: 30px;
-                right: 0%;
-                padding: 10px;
-                border: 2px solid rgba(0, 0, 0, 0.829);
-
-                i {
-                    // justify-content: space-between;
-                    cursor: pointer;
-                    display: flex !important;
-                    color: black;
-                    font-size: 16px;
-                    gap: 20px;
-
-                    &:hover {
-                        scale: 0.98;
-                    }
-
-                }
-            }
-        }
-        &-extras {
-            display: flex;
-            flex-flow: column;
-            gap: 10px;
-            .importancia-p, .categ-p {
-                font-size: 14px;
-                padding: 0 0 0 5px;
-                margin-bottom: 0px;
-            }
-            .importancia-select, .categ-select {
-                font-size: 14px;
-                width: fit-content;
-                background-color: transparent;
-                border-radius: 3px;
-            }
-        }
-    }
-
-    .tarefa.active {
-        .tarefa-obs {
-            max-height: 500px;
-        }
-    }
-
-
-}
-
-#formNovaTarefa {
-    form {
-        position: relative;
-        background-color: white;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 700px;
-        height: 450px;
-        display: flex;
-        flex-flow: wrap;
-        justify-content: center;
-        padding: 20px;
-        border-radius: 20px;
-
-        .form-group {
-            width: 100%;
-            display: flex;
-            flex-flow: wrap;
-            gap: 20px;
-
-            .label-input {
+            .ul {
                 display: flex;
                 flex-flow: column;
-            }
-            input, select {
-                height: 38px;
-                background-color: transparent;
-                border: 1px solid #ced4da;
-                border-radius: .25rem;
-                &:focus {
-                    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
-                }
-            }
-            #inputNewTask, #inputNewTask-label {
-                width: 100%;
-            }
-            #data,#data-label, #horario, #horario-label,.form-control {
-                width: 100%;
+                gap: 20px;
             }
 
-            #horario:focus-visible,select,textarea {
-                outline: none !important;
-            }
-            textarea {
-                width: 100%;
-                resize: none;
-                border-radius: .25rem;
-                &:focus {
-                    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);    
+            .itens {
+                font-size: 18px;
+                font-weight: 500;
+                cursor: pointer;
+
+                .menu-itens {
+                    max-height: 0px;
+                    overflow: hidden;
+                    transition: .7s;
+                }
+
+                ul {
+                    padding-left: 40px;
+                }
+
+                &:hover {
+                    .menu-itens {
+                        max-height: 500px;
+                    }
                 }
             }
-            
-            .task-extras {
+
+            .li_hover {
+                position: relative;
+                width: fit-content;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    height: 3px;
+                    width: 0%;
+                    background-color: white;
+                    left: 0;
+                    bottom: 0;
+                    transition: 0.5s;
+                }
+
+                &:hover {
+                    &::after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+    #tarefa-header {
+        .container {
+            display: flex;
+            justify-content: space-between;
+
+            .menu-header {
+                ul {
+                    height: 50px;
+                    display: flex;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    gap: 30px;
+
+                    li {
+                        font-size: 20px;
+
+                        a {
+                            color: $dark-purple;
+                            display: flex;
+                            text-decoration: none;
+                            align-items: center;
+                            width: 100%;
+                            height: 100%;
+                            position: relative;
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                width: 0%;
+                                height: 3px;
+                                left: 0;
+                                bottom: 0;
+                                background-color: $dark-purple;
+                                transition: .3s ease-in-out;
+                            }
+
+                            &:hover {
+                                &::after {
+                                    width: 100%;
+                                }
+                            }
+
+                            &.active {
+                                &::after {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            #logout {
+                z-index: 1;
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    height: 100%;
+                    width: 50px;
+                    background-image: url('./img/logout.png');
+                    background-repeat: no-repeat;
+                    background-position: center center;
+
+                    &:hover {
+                        scale: 0.90;
+                    }
+                }
+            }
+        }
+
+        @include sm {
+            .container {
                 display: flex;
+                justify-content: flex-end;
+
+                #burguer-menu {
+                    z-index: 2;
+                    height: 50px;
+                    width: 40px;
+                    position: relative;
+
+                    span {
+                        position: absolute;
+                        display: block;
+                        background-color: $dark-purple;
+                        width: 100%;
+                        height: 3px;
+                        border-radius: 2px;
+                        top: 50%;
+
+                        &:first-child {
+                            top: 25%;
+                        }
+
+                        &:last-child {
+                            top: 75%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .svg-bg {
+        position: fixed;
+        top: -190px;
+        right: -70px;
+        z-index: -1;
+        transform: rotate(-15deg);
+
+    }
+
+    .svg-bg-2 {
+        position: fixed;
+        bottom: -200px;
+        left: 0px;
+        z-index: 0;
+        transform: rotate(-45deg);
+
+        @include sm {
+            bottom: -250px;
+        }
+
+        @include lower-sm {
+            bottom: -300px;
+        }
+
+        @media (max-width: 410px) {
+            bottom: -350px;
+        }
+    }
+
+    h4 {
+        color: $dark-purple !important;
+        border-bottom: 3px solid $light-purple;
+        margin-bottom: 20px !important;
+        padding-bottom: 10px;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            p {
+                color: black;
+                font-weight: 500;
+                font-size: 20px;
+                text-align: start;
+                margin-bottom: 50px;
+            }
+
+
+            #noBtn,
+            #yesBtn {
+                align-items: center;
+                border: 0;
+                border-radius: 100px;
+                box-sizing: border-box;
+                color: #ffffff;
+                cursor: pointer;
+                display: inline-flex;
+                font-size: 16px;
+                font-weight: 600;
+                justify-content: center;
+                line-height: 20px;
+                min-height: 40px;
+                width: 100%;
+                overflow: hidden;
+                padding: 0px;
+                padding-left: 20px;
+                padding-right: 20px;
+                text-align: center;
+                touch-action: manipulation;
+                transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+                user-select: none;
+                -webkit-user-select: none;
+                vertical-align: middle;
+
+                &:hover {
+                    scale: 0.98;
+                }
+
+            }
+
+            #yesBtn {
+                background-color: $dark-purple;
+                color: #ffffff;
+                margin-bottom: 10px;
+            }
+
+            #noBtn {
+                color: rgba(0, 0, 0, 0.726);
+                border: 1.2px solid black;
+                background-color: transparent;
+            }
+
+        }
+    }
+
+    .form {
+        margin-bottom: 0 !important;
+    }
+
+    .formNovaTarefa {
+        form {
+            position: relative;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 450px;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 20px;
+
+            .form-group {
+                width: 100%;
+                display: flex;
+                flex-flow: wrap;
                 gap: 20px;
-                padding: 0;
-                div {
+
+                .label-input {
                     display: flex;
                     flex-flow: column;
                 }
+
+                input,
+                select {
+                    height: 38px;
+                    background-color: transparent;
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;
+
+                    &:focus {
+                        box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+                    }
+                }
+
+                #inputNewTask,
+                #inputNewTask-label {
+                    width: 100%;
+                }
+
+                #data,
+                #data-label,
+                #horario,
+                #horario-label,
+                .form-control {
+                    width: 100%;
+                }
+
+                #horario:focus-visible,
+                select,
+                textarea {
+                    outline: none !important;
+                }
+
+                textarea {
+                    width: 100%;
+                    resize: none;
+                    border-radius: .25rem;
+
+                    &:focus {
+                        box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+                    }
+                }
+
+                .task-extras {
+                    display: flex;
+                    gap: 20px;
+                    padding: 0;
+
+                    div {
+                        display: flex;
+                        flex-flow: column;
+                    }
+                }
+
+                .new-categ {
+                    .span-new-categ {
+                        font-size: 15px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                    }
+
+                    #form-new-categ {
+                        display: none;
+
+                        #categ-btn {
+                            height: 10px;
+                            margin-top: 5px;
+                            border: none;
+                            background-color: $dark-purple;
+                            border-radius: 3px;
+
+                            &:hover {
+                                scale: 0.99;
+                            }
+                        }
+                    }
+                }
             }
 
-            .new-categ {
-                .span-new-categ {
-                    font-size: 15px;
-                    margin-top: 10px;
-                    cursor: pointer;
+            
+
+            #btnCadastro {
+                background-color: $dark-purple;
+                color: white;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+        }
+        @include md {
+            form {
+                width: 500px;
+            }
+        }
+
+        &#formNovaTarefa2 {
+            // .form-group-1 {
+                
+            // }
+            .form-group-2 {
+                display: none;
+            }
+
+            #btnCadastro {
+                display: none;
+            }
+            .prev-btn {
+                display: none;
+            }
+        }
+    }
+
+    .empty::before {
+        content: "Título";
+        color: #aaaaaad2;
+        position: absolute;
+        font-size: 16px;
+        top: 50%;
+        left: 5px;
+        transform: translate(0, -50%);
+        pointer-events: none;
+    }
+
+    .empty-obs::before {
+        content: "Observação";
+        color: #aaaaaad2;
+        position: absolute;
+        font-size: 16px;
+        top: 50%;
+        left: 5px;
+        transform: translate(0, -50%);
+        pointer-events: none;
+    }
+
+    .menu {
+        position: fixed;
+        left: 3%;
+        top: 76px;
+        border: 3px solid $light-purple;
+        padding: 10px;
+        border-radius: 10px;
+        color: $dark-purple;
+
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ul {
+            display: flex;
+            flex-flow: column;
+            gap: 20px;
+        }
+
+        .itens {
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+
+            .menu-itens {
+                max-height: 0px;
+                overflow: hidden;
+                transition: .7s;
+            }
+
+            ul {
+                padding-left: 40px;
+            }
+
+            &:hover {
+                .menu-itens {
+                    max-height: 500px;
                 }
-                #form-new-categ {
-                    display: none;
-                    #categ-btn {
-                        height: 10px;
-                        margin-top: 5px;
-                        border: none;
-                        background-color: $dark-purple;
-                        border-radius: 3px;
-                        &:hover {
-                            scale: 0.99;
-                        }
+            }
+        }
+
+        .li_hover {
+            position: relative;
+            width: fit-content;
+
+            &::after {
+                content: '';
+                position: absolute;
+                height: 3px;
+                width: 0%;
+                background-color: $light-purple;
+                left: 0;
+                bottom: 0;
+                transition: 0.5s;
+            }
+
+            &:hover {
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+
+        @include lg {
+            width: 180px;
+        }
+
+        @include md {
+            display: none;
+        }
+    }
+
+    #btnNewTask {
+        display: flex;
+        position: relative;
+        // align-items: center;
+        margin-bottom: 20px;
+        width: fit-content;
+        cursor: pointer;
+
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            margin-left: 7px;
+            border: 2px solid black;
+            border-radius: 50%;
+        }
+    }
+
+    .order-menu {
+        max-height: 35px;
+        overflow: hidden;
+        transition: 1s;
+        border: 2px solid $light-purple;
+        border-radius: 3px;
+        margin-bottom: 10px;
+
+        &:hover {
+            max-height: 500px;
+        }
+
+        .order-btn {
+            padding: 5px;
+            border-top: 0px solid $light-purple;
+            border-bottom: 0px solid $light-purple;
+            cursor: pointer;
+
+            &:hover {
+                border-top: 2px solid $light-purple;
+                border-bottom: 2px solid $light-purple;
+            }
+
+            &:last-child {
+                &:hover {
+                    border-bottom: 0px solid $light-purple;
+                }
+            }
+
+            &:first-child {
+                &:hover {
+                    border-top: 0px solid $light-purple;
+                }
+            }
+        }
+    }
+
+
+    .app {
+        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+
+        .categ-title {
+            display: flex;
+            border-bottom: 3px solid $light-purple;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+
+            h4 {
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
+                border-bottom: 0px solid $light-purple;
+            }
+
+            #formRemoveCateg {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0;
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
+
+                    &:hover {
+                        scale: 0.95;
                     }
                 }
             }
         }
 
-        #btnCadastro {
-            background-color: $dark-purple;
-            color: white;
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translate(-50%,0);
+        .pagina {
+            width: 740px;
+            border-radius: 10px;
+            border: solid 3px $light-purple;
+            padding: 25px !important;
+
+            .extra-btns {
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+            }
+
+            .tarefas {
+                display: flex;
+                justify-content: space-between;
+                flex-flow: wrap;
+                gap: 30px 0;
+
+                .tarefa {
+                    width: 100%;
+                    position: relative;
+                    border: 3px solid $light-purple;
+                    border-radius: 10px;
+                    padding: 20px;
+                    display: flex;
+                    flex-flow: column;
+                    gap: 10px;
+
+                    &-title {
+                        position: relative;
+                        font-size: 16px;
+                        font-weight: 500;
+                        padding: 0 0 0 5px;
+                        width: 80%;
+                    }
+
+
+                    &-obs {
+                        position: relative;
+                        overflow: hidden;
+                        text-align: start;
+                        max-height: 25px;
+                        transition: 1s ease-in-out;
+                        font-size: 15px;
+
+                        p {
+                            display: block;
+                            white-space: normal;
+                            margin: 0;
+                            padding: 0 0 0 5px;
+                        }
+                    }
+
+                    &-data {
+                        font-size: 14px !important;
+                        display: flex;
+                        flex-flow: column;
+                        gap: 10px;
+
+                        .horario {
+                            border: none;
+                            background-color: transparent;
+                            width: 75px;
+                            padding: 0 0 0 5px;
+                        }
+
+                        .calendario {
+                            font-size: 14px !important;
+                            border: none;
+                            background-color: transparent;
+                            padding: 0 0 0 5px;
+                            width: 150px;
+                            color: black;
+                        }
+                    }
+
+                    &-options {
+                        position: absolute;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 10;
+
+                        .pontinhos {
+                            pointer-events: all;
+                            cursor: pointer;
+                        }
+
+                        .icons {
+                            display: none;
+                            position: absolute;
+                            overflow: hidden;
+                            width: 140px;
+                            border-radius: 5px;
+                            height: 0;
+                            opacity: 0;
+                            top: 30px;
+                            right: 0%;
+                            padding: 10px;
+                            border: 2px solid rgba(0, 0, 0, 0.829);
+
+                            i {
+                                // justify-content: space-between;
+                                cursor: pointer;
+                                display: flex !important;
+                                color: black;
+                                font-size: 16px;
+                                gap: 20px;
+
+                                &:hover {
+                                    scale: 0.98;
+                                }
+
+                            }
+                        }
+                    }
+
+                    &-extras {
+                        display: flex;
+                        flex-flow: column;
+                        gap: 10px;
+
+                        .importancia-p,
+                        .categ-p {
+                            font-size: 14px;
+                            padding: 0 0 0 5px;
+                            margin-bottom: 0px;
+                        }
+
+                        .importancia-select,
+                        .categ-select {
+                            font-size: 14px;
+                            width: fit-content;
+                            background-color: transparent;
+                            border-radius: 3px;
+                            display: none;
+                        }
+                    }
+                }
+
+                .tarefa.active {
+                    .tarefa-obs {
+                        max-height: 500px;
+                    }
+                }
+
+
+            }
         }
-    }
-}
 
-.empty::before {
-    content: "Título";
-    color: #aaaaaad2;
-    position: absolute;
-    font-size: 16px;
-    top: 50%;
-    left: 5px;
-    transform: translate(0, -50%);
-    pointer-events: none;
-}
-.empty-obs::before {
-    content: "Observação";
-    color: #aaaaaad2;
-    position: absolute;
-    font-size: 16px;
-    top: 50%;
-    left: 5px;
-    transform: translate(0, -50%);
-    pointer-events: none;
-}
-
-.menu {
-    position: fixed;
-    left: 3%;
-    top: 4%;
-    border: 3px solid $light-purple;
-    padding: 10px;
-    border-radius: 10px;
-    color: $dark-purple;
-
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .ul {
-        display: flex;
-        flex-flow: column;
-        gap: 20px;
-    }
-
-    .itens {
-        font-size: 18px;
-        font-weight: 500;
-        cursor: pointer;
-
-        .menu-itens {
-            max-height: 0px;
-            overflow: hidden;
-            transition: .7s;
+        @media (max-width: 1300px) {
+            .pagina {
+                width: 650px;
+            }
         }
 
-        ul {
-            padding-left: 40px;
+        @include lg {
+            .pagina {
+                width: 600px;
+            }
         }
 
-        &:hover {
-            .menu-itens {
-                max-height: 500px;
+        @media (max-width: 1100px) {
+            .pagina {
+                width: 550px;
+            }
+        }
+
+        @include lower-sm {
+            .pagina {
+                width: 400px;
+            }
+        }
+
+        @media (max-width: 410px) {
+            .pagina {
+                width: 350px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .pagina {
+                width: 330px;
             }
         }
     }
-}
-
-#btnNewTask {
-    display: flex;
-    position: relative;
-    // align-items: center;
-    margin-bottom: 20px;
-    width: fit-content;
-    cursor: pointer;
-    span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 20px;
-        height: 20px;
-        text-align: center;
-        margin-left: 7px;
-        border: 2px solid black;
-        border-radius: 50%;
-    }
-}
-
-.importancia-select, .categ-select {
-    display: none;
-}
-
-.order-menu {
-    max-height: 35px;
-    overflow: hidden;
-    transition: 1s;
-    border: 2px solid $light-purple;
-    border-radius: 3px;
-    margin-bottom: 10px;
-    &:hover {
-        max-height: 500px;
-    }
-
-    .order-btn {
-        padding: 5px;
-        border-top: 0px solid $light-purple;
-        border-bottom: 0px solid $light-purple;
-        cursor: pointer;
-
-        &:hover {
-            border-top: 2px solid $light-purple;
-            border-bottom: 2px solid $light-purple;
-        }
-        &:last-child {
-            &:hover {
-                border-bottom: 0px solid $light-purple;
-            }
-        }
-        &:first-child {
-            &:hover {
-                border-top: 0px solid $light-purple;
-            }
-        }
-    }
-}
-
-.extra-btns {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-}
-
-.li_hover {
-    position: relative;
-    width: fit-content;
-
-    &::after {
-        content: '';
-        position: absolute;
-        height: 3px;
-        width: 0%;
-        background-color: $light-purple;
-        left: 0;
-        bottom: 0;
-        transition: 0.5s;
-    }
-    &:hover {
-        &::after {
-            width: 100%;
-        }
-    }
-}

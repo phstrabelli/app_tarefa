@@ -24,3 +24,50 @@ $currentPage = basename($_SERVER['PHP_SELF'])
 </head>
 
 <body>
+    <header class="header-tarefa container">
+        <div id="logout">
+            <form action="user_controller.php?acao=deslogar" method="post"">
+                <button ></button>
+            </form>
+        </div>
+
+        <div class=" menu-burguer d-lg-none">
+                <span></span>
+                <span></span>
+                <span></span>
+        </div>
+
+        <div class="off-screen-menu d-lg-none">
+            <div class="menu-hidden">
+                <nav>
+                    <ul class="ul">
+                        <li class="itens li_hover" id="todas-tarefas">Todas</li>
+                        <li class="itens">
+                            Situação
+                            <ul class="menu-itens">
+                                <li status-id='2' class="status_li li_hover">Realizada</li>
+                                <li status-id='1' class="status_li li_hover">Pendente</li>
+                                <li status-id='3' class="status_li li_hover">Atrasada</li>
+                            </ul>
+                        </li>
+                        <li class="itens">
+                            Categorias
+                            <ul class="menu-itens">
+                                <?php foreach ($categorias as $categ): ?>
+                                    <li categ-id="<?= $categ->id ?>" class="categ_li li_hover"><?= $categ->categ ?></li>
+                                <?php endforeach ?>
+                            </ul>
+                        </li>
+                        <li class="itens">
+                            Importancia
+                            <ul class="menu-itens">
+                                <li class="importancia_li li_hover" importancia-id='1'>Urgente</li>
+                                <li class="importancia_li li_hover" importancia-id='2'>Necessário</li>
+                                <li class="importancia_li li_hover" importancia-id='3'>Posso Fazer Depois</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>

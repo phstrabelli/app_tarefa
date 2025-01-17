@@ -17,6 +17,10 @@
 <body>
     <?php session_start(); ?>
 
+    <?php
+    if (isset($_SESSION['id'])) {
+        header('Location: todas_tarefas.php');
+    } ?>
 
     <main>
         <?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1): ?>
