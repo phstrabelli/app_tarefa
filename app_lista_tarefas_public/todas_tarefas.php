@@ -7,52 +7,84 @@ if (!isset($_SESSION['id']))
 $acao = 'recuperar';
 require 'tarefa_controller.php';
 require_once 'categ_controller.php';
+
 ?>
 
 <?php include_once './components/header.php' ?>
 
 <main>
-	
+
 
 	<?php include_once './components/svg_bg.php' ?>
-	
+
 	<div class=" menu">
-			<nav>
-				<ul class="ul">
-					<li class="itens li_hover" id="todas-tarefas">Todas</li>
-					<li class="itens">
-						Situação
-						<ul class="menu-itens">
-							<li status-id='2' class="status_li li_hover">Realizada</li>
-							<li status-id='1' class="status_li li_hover">Pendente</li>
-							<li status-id='3' class="status_li li_hover">Atrasada</li>
-						</ul>
-					</li>
-					<li class="itens">
-						Categorias
-						<ul class="menu-itens">
-							<?php foreach ($categorias as $categ): ?>
-								<li categ-id="<?= $categ->id ?>" class="categ_li li_hover"><?= $categ->categ ?></li>
-							<?php endforeach ?>
-						</ul>
-					</li>
-					<li class="itens">
-						Importancia
-						<ul class="menu-itens">
-							<li class="importancia_li li_hover" importancia-id='1'>Urgente</li>
-							<li class="importancia_li li_hover" importancia-id='2'>Necessário</li>
-							<li class="importancia_li li_hover" importancia-id='3'>Posso Fazer Depois</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+		<nav>
+			<ul class="ul">
+				<li class="itens li_hover" id="todas-tarefas">Todas</li>
+				<li class="itens">
+					Situação
+					<ul class="menu-itens">
+						<li status-id='2' class="status_li li_hover">Realizada</li>
+						<li status-id='1' class="status_li li_hover">Pendente</li>
+						<li status-id='3' class="status_li li_hover">Atrasada</li>
+					</ul>
+				</li>
+				<li class="itens">
+					Categorias
+					<ul class="menu-itens">
+						<?php foreach ($categorias as $categ): ?>
+							<li categ-id="<?= $categ->id ?>" class="categ_li li_hover"><?= $categ->categ ?></li>
+						<?php endforeach ?>
+					</ul>
+				</li>
+				<li class="itens">
+					Importancia
+					<ul class="menu-itens">
+						<li class="importancia_li li_hover" importancia-id='1'>Urgente</li>
+						<li class="importancia_li li_hover" importancia-id='2'>Necessário</li>
+						<li class="importancia_li li_hover" importancia-id='3'>Posso Fazer Depois</li>
+					</ul>
+				</li>
+				<li class="itens">
+					Conjuntas
+					<ul class="menu-itens">
+						<li status-id='2' class="conjuntas_li li_hover">Realizada</li>
+						<li status-id='1' class="conjuntas_li li_hover">Pendente</li>
+						<li status-id='3' class="conjuntas_li li_hover">Atrasada</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
 	</div>
+		
+
 
 	<?php include_once './todas.php' ?>
+
+	<!-- <?php var_dump($convites); ?>
+	
+	<div class="tasks-invites">
+		<p>Deseja aceitar a tarefa: <?= $convites[0]->tarefa ?></p>
+		<p>Enviada por: <?= $convites[0]->username ?></p>
+		<div>Sim</div>
+		<div>Não</div>
+	</div> -->
+
+
 
 	<?php include_once './components/confirmation_popup.php' ?>
 
 	<?php include_once './components/newtask_popup.php'; ?>
+
+	<div id="confirmationInvitePopup" class="popup">
+    <div class="popup-content">
+        <p>Tem certeza que deseja concluir essa tarefa?</p>
+		<p>Ainda possui convidados que não a finalizaram, se confirmar, irá concluir a tarefa de todos.</p>
+        <button id="yesBtnInvite">Sim</button>
+        <button id="noBtnInvite">Cancelar</button>
+    </div>
+
+</div>
 	<div class="response"></div>
 </main>
 
@@ -86,7 +118,7 @@ require_once 'categ_controller.php';
 			$('.formNovaTarefa').fadeToggle()
 			document.body.style.overflow = 'hidden'
 		})
-		
+
 		$(document).on('click', '.formNovaTarefa', () => {
 			$('.formNovaTarefa').fadeToggle()
 			document.body.style.overflow = 'auto'
@@ -165,6 +197,26 @@ require_once 'categ_controller.php';
 						dateFormat: "Y-m-d",
 						altInput: true
 					});
+				},
+				error: function() {
+					$('.app').html('Erro ao carregar o conteúdo.');
+				}
+			});
+		})
+
+		$('.conjuntas_li').on('click', function(e) {
+			let id = e.currentTarget.getAttribute('status-id')
+
+			$.ajax({
+				url: 'conjuntas.php',
+				type: 'POST',
+				data: {
+					id: id,
+				},
+				success: function(response) {
+
+					$('.app').html(response);
+
 				},
 				error: function() {
 					$('.app').html('Erro ao carregar o conteúdo.');
@@ -290,17 +342,17 @@ require_once 'categ_controller.php';
 
 			$(p).attr('value', value)
 			$(p).text(text)
-			if($(p).text() == '')
-				$(p).text('Nenhuma Categoria')	
-			
+			if ($(p).text() == '')
+				$(p).text('Nenhuma Categoria')
+
 			p.style.display = 'block';
 		})
 
-		$(document).on('click','.span-new-categ', function(e) {
+		$(document).on('click', '.span-new-categ', function(e) {
 			$(e.currentTarget).css('margin-top', '0')
 			$(e.currentTarget).css('margin-bottom', '.5rem')
-			$('#categ_id').css('display','none')
-			$('#categ-label').css('display','none')	
+			$('#categ_id').css('display', 'none')
+			$('#categ-label').css('display', 'none')
 			$('#form-new-categ').css('display', 'flex')
 			$('.categ-div').css('height', '103px')
 			$('.importancia-div').css('height', '103px')
@@ -309,8 +361,8 @@ require_once 'categ_controller.php';
 		$(document).on('click', '#categ-btn', function(e) {
 			$('.span-new-categ').css('margin-top', '10px')
 			$('.span-new-categ').css('margin-bottom', '0')
-			$('#categ_id').css('display','block')
-			$('#categ-label').css('display','block')	
+			$('#categ_id').css('display', 'block')
+			$('#categ-label').css('display', 'block')
 			$('#form-new-categ').css('display', 'none')
 			$('.categ-div').css('height', 'fit-content')
 			$('.importancia-div').css('height', 'fit-content')
@@ -322,15 +374,15 @@ require_once 'categ_controller.php';
 
 			burguer.toggleClass('active');
 			menu.toggleClass('active');
-			
-			verifyActiveMenuBurguer(burguer,menu)
+
+			verifyActiveMenuBurguer(burguer, menu)
 		})
 
 		$('.li_hover').on('click', function(e) {
 			$('.off-screen-menu').removeClass('active')
 			$('.menu-burguer').removeClass('active')
 
-			verifyActiveMenuBurguer($('.menu-burguer'),$('.off-screen-menu'))
+			verifyActiveMenuBurguer($('.menu-burguer'), $('.off-screen-menu'))
 		})
 
 		function verifyActiveMenuBurguer(burguer, menu) {
@@ -340,34 +392,45 @@ require_once 'categ_controller.php';
 
 			if (burguer.hasClass('active')) {
 				$(middleSpan).css('opacity', '0');
-				$(firstSpan).css({ top: '50%', transform: 'rotate(45deg)' });
-				$(lastSpan).css({ top: '50%', transform: 'rotate(-45deg)' });
+				$(firstSpan).css({
+					top: '50%',
+					transform: 'rotate(45deg)'
+				});
+				$(lastSpan).css({
+					top: '50%',
+					transform: 'rotate(-45deg)'
+				});
 
 				document.body.style.overflow = 'hidden';
-				$(menu).css({ right: '0'});
+				$(menu).css({
+					right: '0'
+				});
 			} else {
 				$(middleSpan).css('opacity', '1');
-				$(firstSpan).css({ top: '25%', transform: 'rotate(0)' });
-				$(lastSpan).css({ top: '75%', transform: 'rotate(0)' });
-				
+				$(firstSpan).css({
+					top: '25%',
+					transform: 'rotate(0)'
+				});
+				$(lastSpan).css({
+					top: '75%',
+					transform: 'rotate(0)'
+				});
+
 				document.body.style.overflow = 'auto';
-				$(menu).css({ right: '-500px'});
+				$(menu).css({
+					right: '-500px'
+				});
 			}
 		}
 
 		$(document).on('click', '.next-btn', function(e) {
 
-			// if($('#inputNewTask').val() == '' || $('#data').val() == '' || $('#horario').val() == '') {
-			// 	alert('Preencha todos os campos para continuar o cadastro.')
-			// }
-			// else {
-				$('.form-group-1').css('display', 'none')
-				$(e.currentTarget).css('display', 'none')
-				$('.form-group-2').css('display', 'block')
-				$('#btnCadastro').css('display', 'block')
-				$('.prev-btn').css('display', 'block')
-			// }
-			
+			$('.form-group-1').css('display', 'none')
+			$(e.currentTarget).css('display', 'none')
+			$('.form-group-2').css('display', 'block')
+			$('#btnCadastro').css('display', 'block')
+			$('.prev-btn').css('display', 'block')
+
 		})
 	})
 </script>

@@ -104,6 +104,10 @@
                         <option value="1">Urgente</option>
                     </select>
                 </div>
+                <div class="div">
+                    <label for="email_convite">Convidar:</label>
+                    <input id='email_convite' name="email_convite" type="email">
+                </div>
             </div>
 
         </div>

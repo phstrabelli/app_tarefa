@@ -31,7 +31,7 @@ class UserService
         } catch (PDOException $e) {
             $_SESSION['cadastro'] = 0;
             if ($e->getCode() == 23000 && strpos($e->getMessage(), '1062 Duplicate entry') !== false) {
-                $_SESSION['return_message'] = "Este nome de usuário já está sendo utilizado. Por favor, insira um novo.";
+                $_SESSION['return_message'] = "Verficar nome do usuário e email, estes podem estar sendo utilizados por outros usuários.";
             } else {
                 $_SESSION['return_message'] = "Ocorreu um erro. Tente novamente mais tarde.";
             }

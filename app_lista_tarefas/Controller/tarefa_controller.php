@@ -6,6 +6,7 @@ require_once "../app_lista_tarefas/conexao.php";
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
+
 if ($acao == 'inserir') {   
     session_start();
 
@@ -21,9 +22,15 @@ if ($acao == 'inserir') {
     $conexao = new Conexao();
 
     $tarefaService = new TarefaService($conexao, $tarefa);
-    $tarefaService->inserir();
 
+    
+    $tarefa_id = $tarefaService->inserir();
+    
+    if(isset($_POST['email_convite']) && $_POST['email_convite'] != '') {
+        $tarefaService->convidar($_POST['email_convite'], $tarefa_id) ;
+    }
 
+    
     header('Location: todas_tarefas.php');
 
 } else if ($acao == 'recuperar') {
@@ -35,6 +42,8 @@ if ($acao == 'inserir') {
 
     $tarefas = $tarefaService->recuperar();
 
+
+
 }  else if($acao == 'atualizarStatus' || $acao == 'atualizarStatusPendente') {
 
     $tarefa = new Tarefa();
@@ -42,10 +51,21 @@ if ($acao == 'inserir') {
     $conexao = new Conexao();
 
     $tarefaService = new TarefaService($conexao, $tarefa);
-
-    $tarefas = $tarefaService->atualizarStatus($_GET['id']);
     
-} else if($acao == 'remover') {
+    $tarefas = $tarefaService->atualizarStatus($_GET['id']);
+
+} else if($acao == 'verificar_invites') {
+
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+    
+    $invites = $tarefaService->verificarConvites($_GET['id']);
+    
+}
+else if($acao == 'remover') {
     $tarefa = new Tarefa();
 
     $conexao = new Conexao();
@@ -122,4 +142,33 @@ if ($acao == 'inserir') {
     $id = $_GET['id'];
     $tarefas = $tarefaService->atualizar_categ($tarefa, $id);
 
+} else if($acao == 'atualizarStatus' || $acao == 'atualizarStatusPendenteInvite') {
+
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+    
+    $tarefas = $tarefaService->atualizarStatusInvite($_GET['id']);
+    
+} else if($acao == 'removerInvite') {
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $tarefas = $tarefaService->removerInvite($_GET['id']);
+}
+
+if($acao == 'recuperar') {
+
+    $tarefa = new Tarefa();
+
+    $conexao = new Conexao();
+
+    $tarefaService = new TarefaService($conexao, $tarefa);
+
+    $convites = $tarefaService->recuperar_notificacao();
 }

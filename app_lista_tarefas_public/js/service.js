@@ -1,9 +1,8 @@
-
 function remove(id, action) {
     $('#confirmationPopup').fadeIn();
 
     $('#yesBtn').on('click', () => {
-        checkAndRemove(id,action)
+        checkInvites(id,action)
         $('#confirmationPopup').fadeOut();
     })
 
@@ -12,6 +11,44 @@ function remove(id, action) {
     })
 }
 
+function checkInvites(id, action, checkAction) {
+    $.ajax({
+        type: 'GET',
+        url: 'tarefa_controller.php',
+        data: {
+            id: id,
+            acao: action,
+        },
+
+        success: dados => {
+
+            console.log(dados);
+            
+            if(dados != '') {
+                $('#confirmationInvitePopup').fadeIn();
+
+                $('#yesBtnInvite').on('click', () => {
+                    checkAndRemove(id, 'atualizarStatusPendente')
+                    $('#confirmationInvitePopup').fadeOut();
+                })
+
+                $('#noBtnInvite').on('click', () => {
+                    $('#confirmationInvitePopup').fadeOut();
+                })
+            }
+            else {
+                console.log('checkAction');
+                
+                checkAndRemove(id, checkAction);
+            }
+
+        },
+        error: erro => {
+            console.log('erro')
+        }
+    })
+
+}
 function checkAndRemove(id, action) {
     $.ajax({
         type: 'GET',
@@ -24,18 +61,40 @@ function checkAndRemove(id, action) {
 
         success: dados => {
 
-            if (action == 'atualizarStatus') {
-                let statusDiv = '#status_' + id
-                let statusText = dados == 1 ? '(pendente)' : '(realizado)'
-
-                $text = $(statusDiv).text() == '(pendente)'   || $(statusDiv).text() == '(atrasado)' ? '(realizado)' : '(pendente)'
-
-                $(statusDiv).text($text)
-            }
             if (action == 'remover' || action == 'atualizarStatusPendente') {
                 let tarefaDiv = '#tarefaDiv_' + id
                 $(tarefaDiv).attr('style', 'display: none !important');
             }
+            
+        },
+        error: erro => {
+            console.log('erro')
+        }
+    })
+
+}
+
+function checkAndRemoveInvite(id, action) {
+
+    console.log(id);
+    
+    $.ajax({
+        type: 'GET',
+        url: 'tarefa_controller.php',
+        data: {
+            id: id,
+            acao: action,
+        },
+
+
+        success: dados => {
+            console.log(dados);
+            
+            if (action == 'removerInvite' || action == 'atualizarStatusPendenteInvite') {
+                let tarefaDiv = '#tarefaDiv_' + id
+                $(tarefaDiv).attr('style', 'display: none !important');
+            }
+            
         },
         error: erro => {
             console.log('erro')

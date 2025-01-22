@@ -66,6 +66,9 @@ $currentPage = basename($_SERVER['PHP_SELF'])
                                 <li class="importancia_li li_hover" importancia-id='3'>Posso Fazer Depois</li>
                             </ul>
                         </li>
+                        <li class="itens">
+                            Conjuntas
+                        </li>
                     </ul>
                 </nav>
             </div>

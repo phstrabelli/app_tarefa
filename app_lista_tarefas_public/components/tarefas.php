@@ -1,7 +1,6 @@
 <?php
-if ($tarefa->importancia_id == 3) {
-}
-$importancia = 'Posso Fazer Depois';
+if ($tarefa->importancia_id == 3) 
+    $importancia = 'Posso Fazer Depois';
 
 if ($tarefa->importancia_id == 2)
     $importancia = 'Necessário';
@@ -19,7 +18,6 @@ foreach ($categorias as $categoria) {
 $id_status = isset($_SESSION['id_status']) ? $_SESSION['id_status'] : '';
 ?>
 
-
 <div class="tarefa" id="tarefaDiv_<?= $tarefa->id ?>">
     <div id='tarefa_<?= $tarefa->id ?>' class="tarefa-title" contenteditable><?= $tarefa->tarefa ?></div>
 
@@ -36,7 +34,10 @@ $id_status = isset($_SESSION['id_status']) ? $_SESSION['id_status'] : '';
         <div class="pontinhos"><img src="./img/mostrar-mais-botao-com-tres-pontos.png" alt=""></div>
         <div class="icons">
             <i class="fas fa-trash-alt  " onclick="remove(<?= $tarefa->id ?>, 'remover')">Excluir</i>
-            <i class="fas fa-check-square  " onclick="checkAndRemove(<?= $tarefa->id ?>, '<?= $id_status != '' ? 'atualizarStatusPendente' : 'atualizarStatus'?>')">Concluido</i>
+            <?php 
+                $id_status != '' ? 'atualizarStatusPendente' : 'atualizarStatus';
+            ?>
+            <i class="fas fa-check-square  " onclick="checkInvites(<?= $tarefa->id ?>, 'verificar_invites', '<?= $id_status ?>')">Concluido</i>
         </div>
     </div>
     <div class="tarefa-extras">
